@@ -28,7 +28,7 @@ function wsEjecutar(WebService $ws)
 $ws->parametrosArray); 
  
 
-  print_r($resultado);
+ // print_r($resultado);
  $result= $ws->utf8_converter($resultado);
 
    //¿ocurrio error al llamar al web service?

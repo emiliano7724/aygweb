@@ -1,22 +1,22 @@
-   <?php
+<?php
 include_once('WebService.php');
 
 
 
  
- 	$operacion =$_GET['Operacion'];
-    $idTipoInmueble =$_GET['Tipo'];
-    $dormitorios = $_GET['Dormitorio'];
+ 	$operacion =$_POST['operacion'];
+    $idTipoInmueble =$_POST['tipo'];
+    $dormitorios = $_POST['dormitorios'];
     $idPais = -1;
-    $idProvincia =$_GET['Provincia'];
-    $idLocalidad =$_GET['Localidad']; // 2691 santa fe
-    $idBarrio = -1;
-    $idEmpresa = 2861;
-    $Destacado =$_GET['Destacado'];
+    $idProvincia =$_POST['provincias'];
+    $idLocalidad =$_POST['localidades']; // 2691 santa fe
+    $idBarrio = $_POST['barrios'];
+   $idEmpresa = 2861;
+    $Destacado =0; //$_POST['Destacado'];
     $ForzarPublicacion = 0;
     $Paginar = 1;
-    $PageNum = $_GET['PageNum'];
-    $PageSize =  $_GET['PageSize'];
+    $PageNum = -1;
+    $PageSize = 6;
     $Patron ="nada";
 
         
@@ -39,6 +39,14 @@ $ws= new WebService('GetInmuebles', array("filtro"=>array(
 $obj=$ws->wsEjecutar($ws);
 
     echo $obj;
+   
+
+   /* $idLocalidad =$_POST['idProvincia'];
+    
+ $ws= new WebService('GetLocalidades', array("parameters"=>array(
+    'idProvincia' =>$idLocalidad )));
 
 
+$ws->wsEjecutar($ws); 
+*/
     ?>

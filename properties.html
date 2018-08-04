@@ -18,7 +18,8 @@
 		<link rel="stylesheet" href="css/custom.css" type="text/css" media="all"/>
 		<link rel="stylesheet" href="css/landmark-map.css" media="all"/>
 		<link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i%7CExo:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
+<script src="js/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -26,172 +27,625 @@
 			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 	</head>
+	
+<style type="text/css">.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('images/pageLoader.gif') 50% 50% no-repeat rgb(249,249,249);
+    opacity: .8;
+
+}
+
+</style>
+	
+	<script type="text/javascript">
+  
+var idInmueble1;
+var idInmueble2;
+var idInmueble3;
+var idInmueble4;
+var idInmueble5;
+var idInmueble6;
+
+
+   $(document).ready(function(){
+
+
+
+try{
+getPropiedades();
+getProvincias();
+buscarLocalidades()
+buscarTiposInmueble();
+
+}catch(e){
+//alert(e);
+}
+
+  } );
+
+function paginaSiguiente(){
+    
+    var pagina= $("#current").text();
+    $("#current").text(parseInt(pagina)+1);
+var paginaSiguiente=$("#current").text();
+
+window.location.href=("./properties.html?provincia=-1&localidad=-1&barrio=-1&operacion=-1&tipo=-1&dormitorio=-1&pag="+paginaSiguiente);
+
+
+  
+
+
+ }
+ function paginaAnterior(){
+    var pagina= $("#current").text();
+    $("#current").text(parseInt(pagina)-1);
+var paginaAnterior=$("#current").text();
+
+window.location.href=("./properties.html?provincia=-1&localidad=-1&barrio=-1&operacion=-1&tipo=-1&dormitorio=-1&pag="+paginaAnterior);
+
+
+ }
+function getProvincias(){
+ 
+  $.ajax({
+    type: "POST",
+    url: 'getProvincias.php', 
+    dataType: "html",
+    success: function(data){
+//var jsondata= JSON.parse(data);
+
+      $.each(JSON.parse(data),function(key, registro) {
+    
+       
+       $.each(registro.ResultList.ProvinciaDTO,function(key1, registro1) {
+
+
+     var id=registro1.IdProvincia;
+      var nombre=registro1.Nombre;
+      $("#provincias").append('<option value='+id+'>'+nombre+'</option>');
+    
+
+  });  
+      });        
+    },
+    error: function(data) {
+     // alert("Ocurrio un error "+data);
+    }
+  });
+
+}
+function buscarLocalidades(){
+  var select = document.getElementById("provincias");
+  var options=document.getElementsByTagName("option");
+document.getElementById("localidades").length=0;
+ var idProvincia=select.value;
+   var parametros = {
+                "idProvincia" : idProvincia,
+               
+        };
+
+   $.ajax({
+    data: parametros,
+    type: "POST",
+    url: 'getLocalidades.php', 
+    dataType: "html",
+    success: function(data){
+ 
+      $.each(JSON.parse(data),function(key, registro) {
+         $.each(registro.ResultList.LocalidadDTO,function(key1, registro1) {
+
+
+     var id=registro1.IdLocalidad;
+      var nombre=registro1.Nombre;
+      $("#localidades").append('<option value='+id+'>'+nombre+'</option>');
+    
+      });
+      }); 
+         $(".loader").fadeOut("slow");            
+    },
+    error: function(data) {
+     // alert("Ocurrio un error Ws getLocalidades "+data);
+    }
+  });
+
+}
+
+function buscarBarrios(){
+  var select = document.getElementById("localidades");
+  var options=document.getElementsByTagName("option");
+document.getElementById("barrios").length=-1;
+ 
+ var IdLocalidad=select.value;
+ //alert(idBarrio);
+   var parametros = null;
+
+   $.ajax({
+    data: parametros,
+    type: "POST",
+    url: 'getBarrios.php', 
+    dataType: "html",
+    success: function(data){
+ 
+      $.each(JSON.parse(data),function(key, registro) {
+         $.each(registro.ResultList.BarrioDTO,function(key1, registro1) {
+
+
+     var id=registro1.IdBarrio;
+      var nombre=registro1.Nombre;
+      $("#barrios").append('<option value='+id+'>'+nombre+'</option>');
+   
+      });
+      });            
+    },
+    error: function(data) {
+     // alert(data);
+    }
+  });
+
+}
+
+
+function buscarTiposInmueble(){
+
+  var select = document.getElementById("tipo");
+ // var options=document.getElementsByTagName("option");
+select.length=-1;
+ 
+ 
+
+   var parametros = null;
+
+   $.ajax({
+   	data:parametros,
+    type: "POST",
+    url: 'getTiposDeInmuebles.php', 
+    dataType: "html",
+    success: function(data){
+ 
+      $.each(JSON.parse(data),function(key, registro) {
+         $.each(registro.ResultList.TipoInmuebleDTO,function(key1, registro1) {
+
+
+     var id=registro1.IdTipoWeb;
+      var nombre=registro1.Nombre;
+     var nombre=registro1.Nombre;
+      if (id!=null) { // el primer id me viene nulo y no con -1 por eso esto
+      $("#tipo").append('<option value='+id+'>'+nombre+'</option>');
+    }
+
+    
+    });
+      });            
+    },
+    error: function(data) {
+    //  alert(data);
+    }
+  });
+
+}
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+    results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+  
+
+  function getPropiedades(){
+ resultado=false;
+ $("#current").text(getParameterByName('pag'));
+
+ var pagina=getParameterByName('pag');
+ var provincia=getParameterByName('provincia');
+ var localidad=getParameterByName('localidad');
+//var barrio=$("#barrio").text();
+var operacion=getParameterByName('operacion');
+var tipo=getParameterByName('tipo');
+
+var dormitorio=getParameterByName('dormitorio');
+/*if (pagina=="") {
+	pagina=1;
+};*/
+ var destacado=0;  
+ var pagesize=6; 
+
+ var parametros = {
+                "PageNum" : pagina,
+                "Destacado" : destacado,
+                "PageSize" : pagesize,
+                "Provincia" : provincia,
+                "Localidad" : localidad,
+                "Operacion" : operacion,
+                "Tipo" : tipo,
+                "Dormitorio" : dormitorio,
+        };
+
+   $.ajax({
+    data: parametros,
+    type: "GET",
+    url: 'getInmuebles.php', 
+    dataType: "html",
+    success: function(data){
+   var precios= [];
+   var ids= [];
+   var idV= [];
+   var direcciones= [];
+   var tipos= [];
+   var imagenes= [];
+   var dormitorios=[];
+   var descbanios=[];
+
+      $.each(JSON.parse(data),function(key, registro) {
+
+         $.each(registro.ResultList.InmuebleResumidoDTO,function(key1, registro1) {
+
+resultado=true;
+
+
+  var id=registro1.Codigo;
+   var idIn=registro1.IdInmueble;
+   var precio=registro1.PrecioAlquiler;
+   var titulo=registro1.Titulo;
+   var direccion=registro1.Direccion;
+   var tipo=registro1.EnVenta;
+var imagen=registro1.ImagenPrincipal;
+ var dormitorio=registro1.Dormitorios;
+   var descbanio=registro1.DescBanios;     
+
+   precios.push(precio);
+   direcciones.push(direccion);
+   ids.push(id);
+   tipos.push(tipo);
+   imagenes.push(imagen);
+   idV.push(idIn);
+   dormitorios.push(dormitorio);
+   descbanios.push(descbanio);
+    	//$("#titulo1").text(titulo);
+     
+///////////////////////////////////////////////
+      $("#precio1").text(precios[0]);
+          $("#direccion1").text(direcciones[0]);
+      $("#id1").text(ids[0]+"#"+idV[0]);
+          idInmueble1=idV[0];
+    $("#id1").attr("href", "./property-detail.html?idInmueble="+idInmueble1);
+$("#imgfooter1").attr("src",imagenes[0]);
+$("#img1").attr("src",imagenes[0]);
+       $("#_id1").attr("href", "./property-detail.html?idInmueble="+idInmueble1);
+      
+    if (tipos[0]) {
+     $("#ventaoalquiler1").text("ALQUILER");
+
+}
+ $("#dormitorio1").text(dormitorios[0]+ " Habitacion/es");
+
+  $("#banios1").text(descbanios[0]+ " Baño/s");
+/////////////////////////////
+        $("#precio2").text(precios[1]);
+        $("#direccion2").text(direcciones[1]);
+        $("#id2").text(ids[1]+"#"+idV[1]);
+            idInmueble2=idV[1];
+      $("#id2").attr("href", "./property-detail.html?idInmueble="+idInmueble2);
+    
+$("#img2").attr("src",imagenes[1]);
+      $("#_id2").attr("href", "./property-detail.html?idInmueble="+idInmueble2); 
+      
+    if (tipos[1]) {
+       $("#ventaoalquiler2").text("ALQUILER");
+
+}
+ $("#dormitorio2").text(dormitorios[1]+ " Habitacion/es");
+
+  $("#banios2").text(descbanios[1]+ " Baño/s");
+/////////////////////////////
+     
+   $("#precio3").text(precios[2]);
+          $("#direccion3").text(direcciones[2]);
+      $("#id3").text(ids[2]+"#"+idV[2]);
+            idInmueble3=idV[2];
+        $("#id3").attr("href", "./property-detail.html?idInmueble="+idInmueble3);
+$("#img3").attr("src",imagenes[2]);
+    $("#_id3").attr("href", "./property-detail.html?idInmueble="+idInmueble3);
+      
+    if (tipos[2]) {
+       $("#ventaoalquiler3").text("ALQUILER");
+
+}
+ $("#dormitorio3").text(dormitorios[2]+ " Habitacion/es");
+
+  $("#banios3").text(descbanios[2]+ " Baño/s");
+/////////////////////////////    
+  $("#precio4").text(precios[3]);
+          $("#direccion4").text(direcciones[3]);
+      $("#id4").text(ids[3]+"#"+idV[3]);
+            idInmueble4=idV[3];
+       $("#id4").attr("href", "./property-detail.html?idInmueble="+idInmueble4);
+$("#img4").attr("src",imagenes[3]);
+ $("#_id4").attr("href", "./property-detail.html?idInmueble="+idInmueble4);
+ 
+      
+    if (tipos[3]) {
+       $("#ventaoalquiler4").text("ALQUILER");
+
+}
+ $("#dormitorio4").text(dormitorios[3]+ " Habitacion/es");
+
+  $("#banios4").text(descbanios[3]+ " Baño/s");
+/////////////////////////////    
+     $("#precio5").text(precios[4]);
+          $("#direccion5").text(direcciones[4]);
+      $("#id5").text(ids[4]+"#"+idV[4]);
+            idInmueble5=idV[4];
+       $("#id5").attr("href", "./property-detail.html?idInmueble="+idInmueble5);
+$("#img5").attr("src",imagenes[4]);
+       $("#_id5").attr("href", "./property-detail.html?idInmueble="+idInmueble5);
+      
+    if (tipos[4]) {
+       $("#ventaoalquiler5").text("ALQUILER");
+
+}
+ $("#dormitorio5").text(dormitorios[4]+ " Habitacion/es");
+
+  $("#banios5").text(descbanios[4]+ " Baño/s");
+/////////////////////////////    
+  $("#precio6").text(precios[5]);
+          $("#direccion6").text(direcciones[5]);
+      $("#id6").text(ids[5]+"#"+idV[5]);
+            idInmueble6=idV[5];
+        $("#id6").attr("href", "./property-detail.html?idInmueble="+idInmueble6);
+$("#img6").attr("src",imagenes[5]);
+       $("#_id6").attr("href", "./property-detail.html?idInmueble="+idInmueble6);
+      
+    if (tipos[5]) {
+       $("#ventaoalquiler6").text("ALQUILER");
+
+}
+ $("#dormitorio6").text(dormitorios[5]+ " Habitacion/es");
+
+  $("#banios6").text(descbanios[5]+ " Baño/s");
+/////////////////////////////    
+
+      });
+       
+      }); 
+     if (resultado==false) {
+     
+    mostrarModal();
+   
+   
+     }
+      $(".loader").fadeOut("slow");          
+    },
+    error: function(data) {
+      //alert(data);
+    }
+  });
+
+  } 
+
+  function mostrarModal(){
+
+$('#modalResult').modal(); // modal sin resultados
+
+  }
+  function filtrarPropiedades(){
+ 
+
+var pagina=0;
+var provincia=document.getElementById("provincias").value;
+ var localidad=document.getElementById("localidades").value;
+var barrio=-1
+var operacion=document.getElementById("operacion").value;
+var tipo=document.getElementById("tipo").value;
+
+var dormitorio=document.getElementById("dormitorios").value;
+window.location.href=("./properties.html?provincia="+provincia+"&localidad="+localidad+"&barrio="+barrio+"&operacion="+operacion+"&tipo="+tipo+"&dormitorio="+dormitorio+"&pag="+pagina);
+
+  }
+
+  function getHref(){
+
+ //$("id1").attr("href", "./properties-detzail.html?idInmueble");
+ var valor=$("#id1").text();
+ alert(valor);
+window.location.href="./property-detail.html?idInmueble=";
+    }
+  </script>
+
 	<body>
+
 		<div class="site">
 	<header>
-		<div class="site">
-			<header class="header header-desktop">
-				<div class="navbar-wrapper">
-					<div class="topbar">
-						<div class="container">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="topmeta">
-										<i class="fa fa-mobile"></i>
-										Contáctenos <a href="tel:(+54)-9 0342-4592413/88 – 0342-156300313">(+54)-9 0342-4592413/88 – 0342-156300313</a>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="topmeta topmeta-right pull-right">
-										<a class="popup-login" href="#popup_01" data-init="magnificPopup" data-options='{"type":"inline","removalDelay":700}' data-effect="mfp-3d-unfold" title="Login / Register">Login / Registrarme</a>
-										<!-- popup-content mfp-with-anim mfp-hide -->
-										<div class="popup-content box-login mfp-with-anim mfp-hide" id="popup_01">
-											<h4 class="title">Login</h4>
-											<form class="login-member-container">
-												<div class="social-login-widget">
-													<div class="social-login-connect-with">Ingresar mediante:</div>
-													<div class="social-login-provider-list">
-														<a rel="nofollow" href="javascript:void(0);" title="Connect with Facebook" data-provider="Facebook">
-															<img alt="Facebook" title="Connect with Facebook" src="images/icons/facebook.png" />
-														</a>
-														<a rel="nofollow" href="javascript:void(0);" title="Connect with Google" data-provider="Google">
-															<img alt="Google" title="Connect with Google" src="images/icons/google.png" />
-														</a>
-														<a rel="nofollow" href="javascript:void(0);" title="Connect with Twitter" data-provider="Twitter">
-															<img alt="Twitter" title="Connect with Twitter" src="images/icons/twitter.png" />
-														</a>
-													</div>
-												</div>
-												<div class="login-member-wrap">
-													<div class="register-member-left">
-														<div class="item-wrap">
-															<label>Usuario</label>
-															<input type="text" id="user_name_login" name="user_name_login" value="" placeholder="Por favor ingrese su nombre de Usuario..." class="required" />
-														</div>
-														<div class="item-wrap">
-															<label>Contraseña</label>
-															<input type="password" id="password_login" name="password_login" value="" placeholder="Por favor ingrese su contraseña..." class="required">
-														</div>
-													</div>
-													<div class="login-member-action">
-														<button type="submit" name="login-account" class="button">
-															Login <i class="fa-li fa fa-spinner fa-spin hide"></i>
-														</button>
-														<p>
-															<span>No tienes cuenta?</span> 
-															<a class="color" href="#" title="Register now!">Registrarme ahora!</a>
-														</p>
-													</div>
-												</div>
-											</form>
-										</div><!-- End / popup-content mfp-with-anim mfp-hide -->
-										<div class="widget widget-social">
-											<div class="social">
-												<div class="social-all">
-													<a href="#" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a>
-													<a href="#" target="_blank" class="google"><i class="fa fa-google"></i></a>
-													<a href="#" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="navbar navbar-default">
-						<div class="container">
-							<div class="navbar-content">
-								<div class="navbar-header pull-left">
-									<button data-target=".nav-collapse" class="btn-navbar icon-menu" type="button">
-										<i class="fa fa-bars"></i>
-									</button>
-									<a href="./" class="navbar-brand" title="Ayg Inmobiliaria">
-										<img class="logo-img logo-normal" src="images/logo.png" alt="AyG Inmobiliaria" />
-									</a>
-								</div> 
-							
-								
+    <div class="site">
+      <header class="header header-desktop">
+        <div class="navbar-wrapper">
+          <div class="topbar">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="topmeta">
+                    <i class="fa fa-mobile"></i>
+                    Contáctenos <a href="tel:(+54)-9 0342-4592413/88 – 0342-156300313">(+54)-9 0342-4592413/88 – 0342-156300313</a>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="topmeta topmeta-right pull-right">
+                    <a class="popup-login" href="#popup_01" data-init="magnificPopup" data-options='{"type":"inline","removalDelay":700}' data-effect="mfp-3d-unfold" title="Login / Register">Login / Registrarme</a>
+                    <!-- popup-content mfp-with-anim mfp-hide -->
+                    <div class="popup-content box-login mfp-with-anim mfp-hide" id="popup_01">
+                      <h4 class="title">Login</h4>
+                      <form class="login-member-container">
+                        <div class="social-login-widget">
+                          <div class="social-login-connect-with">Ingresar mediante:</div>
+                          <div class="social-login-provider-list">
+                            <a rel="nofollow" href="javascript:void(0);" title="Connect with Facebook" data-provider="Facebook">
+                              <img alt="Facebook" title="Connect with Facebook" src="images/icons/facebook.png" />
+                            </a>
+                            <a rel="nofollow" href="javascript:void(0);" title="Connect with Google" data-provider="Google">
+                              <img alt="Google" title="Connect with Google" src="images/icons/google.png" />
+                            </a>
+                            <a rel="nofollow" href="javascript:void(0);" title="Connect with Twitter" data-provider="Twitter">
+                              <img alt="Twitter" title="Connect with Twitter" src="images/icons/twitter.png" />
+                            </a>
+                          </div>
+                        </div>
+                        <div class="login-member-wrap">
+                          <div class="register-member-left">
+                            <div class="item-wrap">
+                              <label>Usuario</label>
+                              <input type="text" id="user_name_login" name="user_name_login" value="" placeholder="Por favor ingrese su nombre de Usuario..." class="required" />
+                            </div>
+                            <div class="item-wrap">
+                              <label>Contraseña</label>
+                              <input type="password" id="password_login" name="password_login" value="" placeholder="Por favor ingrese su contraseña..." class="required">
+                            </div>
+                          </div>
+                          <div class="login-member-action">
+                            <button type="submit" name="login-account" class="button">
+                              Login <i class="fa-li fa fa-spinner fa-spin hide"></i>
+                            </button>
+                            <p>
+                              <span>No tienes cuenta?</span> 
+                              <a class="color" href="#" title="Register now!">Registrarme ahora!</a>
+                            </p>
+                          </div>
+                        </div>
+                      </form>
+                    </div><!-- End / popup-content mfp-with-anim mfp-hide -->
+                    <div class="widget widget-social">
+                      <div class="social">
+                        <div class="social-all">
+                          <a href="https://es-la.facebook.com/aygsantafe/" target="_blank" class="facebook"><i class="fa fa-facebook"></i><span>Facebook</span></a>
+                          <!-- <a href="#" target="_blank" class="google"><i class="fa fa-google"></i></a> -->
+                          <a href="https://www.instagram.com/ayginmobiliaria/" target="_blank" class="twitter"><i class="fa fa-instagram"></i><span>Instagram</span></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="navbar navbar-default">
+            <div class="container">
+              <div class="navbar-content">
+                <div class="navbar-header pull-left">
+                  <button data-target=".nav-collapse" class="btn-navbar icon-menu" type="button">
+                    <i class="fa fa-bars"></i>
+                  </button>
+                  <a href="./" class="navbar-brand" title="Ayg Inmobiliaria">
+                    <img class="logo-img logo-normal" src="images/logo.png" alt="AyG Inmobiliaria" />
+                  </a>
+                </div> 
+           
+                
 <!--..................................................-Carrito....................................................-->
 
-								<!-- <div class="pull-right header-minicart">
-									<div class="widget-shopping-cart-content">
-										<a class="minicart-link-hover" title="Ver carrito" href="cart.html">
-											<i class="ion-android-cart"></i><span>0</span>
-										</a>
-										<div class="wrap-minicart">
-											<ul class="cart_list product_list_widget">
-												<li class="empty">Ningún producto en el carrito.</li> -->
-										<!--	</ul> end product list -->
-									<!--	</div>  /.wrap_minicart -->
-									<!-- </div>
-								</div> -->
-								<!--......................... FIN Carrito...... -->
-								<nav class="pull-right main-menu">
-									<ul class="nav-collapse navbar-nav">
-										<li class="current">
-											<a href="./">Principal</a>
-											<ul class="sub-menu">
-												<li class="current"><a href="index.html">Home Principal</a></li>
-												<!-- <li><a href="index-2.html">Home Map Vertical</a></li>
-												<li><a href="index-3.html">Home Map Horizontal</a></li>
-												<li><a href="index-4.html">Home Half Map</a></li>
-												<li><a href="index-5.html">Home Search Map</a></li>
-												<li><a href="index-6.html">Home Single Property</a></li> -->
-												<li><a href="index-7.html">Home Alternativo </a></li>
-												<!-- <li><a href="index-8.html">Home Custom 2</a></li>
-												<li><a href="index-9.html">Home Custom 3</a></li> -->
-											</ul>
-											<i class="fa fa-angle-down"></i>
-										</li>
-										<li>
-											<a href="#">Propiedades</a>
-											<ul class="sub-menu">
-												<li><a href="properties.html">Listado de Nuestras Propiedades</a></li>
-											<!-- 	<li><a href="property-fullwidth.html">Property FullWidth</a></li>
-												<li><a href="property-left-sidebar.html">Property Left Sidebar</a></li>
-												<li><a href="property-boxed-layout.html">Property Boxed Layout</a></li>
-												<li><a href="property-tab-style.html">Property Tab Style</a></li>
-												<li><a href="property-right-sidebar.html">Property Right Sidebar</a></li>
-												<li><a href="property-landing-page.html">Property Landing Page</a></li> -->
-											</ul>
-											<i class="fa fa-angle-down"></i>
-										</li>
-										<li>
-											<a href="#">Agentes</a>
-											<ul class="sub-menu">
-												<li><a href="agent-list.html">Listado de Nuestros Agentes</a></li>
-												<li><a href="agent-detail.html">Agentes Detalles</a></li>
-											</ul>
-											<i class="fa fa-angle-down"></i>
-										</li>
-										<li>
-											<a href="#">Nosotros</a>
-											<ul class="sub-menu">
-												<!-- <li><a href="header-search-form.html">Header With Search Form</a></li>
-												<li><a href="header-below-map.html">Header Below Map</a></li>
-												<li><a href="header-toggle-menu.html">Header Toggle Menu</a></li>
-												<li><a href="blog.html">Blog List</a></li>
-												<li><a href="blog-mansory.html">Blog Mansory</a></li>
-												<li><a href="blog-detail-fullwidth.html">Blog Details FullWidth</a></li>
-												<li><a href="blog-detail-sidebar.html">Blog Details Sidebar</a></li>
-												<li><a href="agent-package.html">Agent Package</a></li> -->
-												<li><a href="about-us.html">Quienes Somos</a></li>
-												<li><a href="contact-us.html">Contactenos</a></li>
-												<!-- <li><a href="404.html">404 Error</a></li> -->
-											</ul>
-											<i class="fa fa-angle-down"></i>
-										</li>
-										
-									</ul>
-								</nav>
-							</div>
-						</div>
-					</div>
-				</div>
-			</header>
+                <!-- <div class="pull-right header-minicart">
+                  <div class="widget-shopping-cart-content">
+                    <a class="minicart-link-hover" title="Ver carrito" href="cart.html">
+                      <i class="ion-android-cart"></i><span>0</span>
+                    </a>
+                    <div class="wrap-minicart">
+                      <ul class="cart_list product_list_widget">
+                        <li class="empty">Ningún producto en el carrito.</li> -->
+                    <!--  </ul> end product list -->
+                  <!--  </div>  /.wrap_minicart -->
+                  <!-- </div>
+                </div> -->
+                <!--......................... FIN Carrito...... -->
+                <nav class="pull-right main-menu">
+                  <ul class="nav-collapse navbar-nav">
+                    <li class="current">
+                      <a href="./">Principal</a>
+                      <ul class="sub-menu">
+                      <!--  <li class="current"><a href="index.html">Home Principal</a></li> -->
+                        <!-- <li><a href="index-2.html">Home Map Vertical</a></li>
+                        <li><a href="index-3.html">Home Map Horizontal</a></li>
+                        <li><a href="index-4.html">Home Half Map</a></li>
+                        <li><a href="index-5.html">Home Search Map</a></li>
+                        <li><a href="index-6.html">Home Single Property</a></li> -->
+                        <!-- <li><a href="index-7.html">Home Alternativo </a></li> -->
+                        <!-- <li><a href="index-8.html">Home Custom 2</a></li>
+                        <li><a href="index-9.html">Home Custom 3</a></li> -->
+                      </ul>
+                      <i class="fa fa-angle-down"></i>
+                    </li>
+                    <li>
+                      <a href="./properties.html?provincia=-1&localidad=-1&barrio=-1&operacion=-1&tipo=-1&dormitorio=-1&pag=0">Propiedades</a>
+                      <ul class="sub-menu">
+                        <!-- <li><a href="properties.html">Listado de Nuestras Propiedades</a></li> -->
+                      <!--  <li><a href="property-fullwidth.html">Property FullWidth</a></li>
+                        <li><a href="property-left-sidebar.html">Property Left Sidebar</a></li>
+                        <li><a href="property-boxed-layout.html">Property Boxed Layout</a></li>
+                        <li><a href="property-tab-style.html">Property Tab Style</a></li>
+                        <li><a href="property-right-sidebar.html">Property Right Sidebar</a></li>
+                        <li><a href="property-landing-page.html">Property Landing Page</a></li> -->
+                      </ul>
+                      <i class="fa fa-angle-down"></i>
+                    </li>
+                    <li>
+                      <a href="agent-list.html">Agentes</a>
+                      <ul class="sub-menu">
+                        <!-- <li><a href="agent-list.html">Listado de Nuestros Agentes</a></li> -->
+                        <!-- <li><a href="agent-detail.html">Agentes Detalles</a></li> -->
+                      </ul>
+                      <i class="fa fa-angle-down"></i>
+                    </li>
+                    <li>
+                      <a href="about-us.html">Nosotros</a>
+                      <ul class="sub-menu">
+                        <!-- <li><a href="header-search-form.html">Header With Search Form</a></li>
+                        <li><a href="header-below-map.html">Header Below Map</a></li>
+                        <li><a href="header-toggle-menu.html">Header Toggle Menu</a></li>
+                        <li><a href="blog.html">Blog List</a></li>
+                        <li><a href="blog-mansory.html">Blog Mansory</a></li>
+                        <li><a href="blog-detail-fullwidth.html">Blog Details FullWidth</a></li>
+                        <li><a href="blog-detail-sidebar.html">Blog Details Sidebar</a></li>
+                        <li><a href="agent-package.html">Agent Package</a></li> -->
+                        <!-- <li><a href="about-us.html">Quienes Somos</a></li>
+                        <li><a href="contact-us.html">Contactenos</a></li> -->
+                        <!-- <li><a href="404.html">404 Error</a></li> -->
+                      </ul>
+                      <i class="fa fa-angle-down"></i>
+                    </li>
+                    
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      
 			
 			<div id="main">
+				    <div class="modal fade" id="modalResult">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">No encontramos publicaciones que coincidan con tu búsqueda.</h4>
+      </div>
+      <div class="modal-body">
+        <option value="">Pruebe refinar su consulta</option>
+            <img alt="s" src="images/noresult.png" />
+      </div>
+      <div class="modal-footer">
+        
+        <button type="button"  onclick="window.location.href='./properties.html?provincia=-1&localidad=-1&barrio=-1&operacion=-1&tipo=-1&dormitorio=-1&pag=0'" class="btn btn-primary">Ok</button>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+        <div class="loader"></div>
 				<div class="section pt-7 pb-7">
 					<div class="container">
 						<div class="row">
@@ -202,37 +656,100 @@
 											<div class="property-item-wrap">
 												<div class="item-head">
 													<h4 class="item-title">
-														<i class="ion-bookmark">Featured</i> 
-														<a href="property-detail.html" title="Family House in Hudson">Family House in Hudson </a>
+														<i class="ion-bookmark">AyG Inmobiliaria Ofrecimiento</i> 
+														<a  id="id1"></a>
 													</h4>
-													<span class="location">Hoboken, NJ, USA </span>
+													<span id="direccion1" class="location"> </span>
 												</div>
 												<div class="item-featured">
-													<a href="property-detail.html" title="Family House in Hudson">
-														<img src="images/property/property_370x210.jpg" alt="Family House in Hudson" />
+													<a id="_id1" >
+														<img id="img1"    />
 													</a>
-													<span class="property-status">For Sale</span> 
+													<span id="ventaoalquiler1" class="property-status"></span> 
 												</div>
 												<div class="info">
 													<span class="primary-file-1">
-														<i class="icon-ruler"></i> <span>2100 m2</span>
+														<i class="icon-ruler"></i> <span id="m25"></span>
 													</span>
 													<span class="primary-file-2">
-														<i class="icon-bed"></i> <span>5 Bedrooms</span>
+														<i class="icon-bed"></i> <span id="dormitorio5"></span>
 													</span>
 													<span class="primary-file-3">
-														<i class="icon-storage"></i> <span>1 Garages</span>
+														<i class="icon-storage"></i> <span></span>
 													</span>
 													<span class="primary-file-4">
-														<i class="icon-bath"></i> <span>4 Bathrooms</span>
+														<i class="icon-bath"></i> <span id="banios5"></span>
 													</span>
 												</div>
 												<div class="action">
 													<div class="price">
-														<span class="amount">$ &nbsp;127,000</span>
+														<span id="precio1" class="amount"></span>
 													</div>
 													<div class="action-post">
-														<a data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorites" href="#">
+														<a data-toggle="tooltip" data-placement="top"  data-original-title="Favoritos" href="#">
+															<i class="fa fa-heart-o"></i>
+														</a>
+														<div class="property-sharing">
+															<a data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorites" class="like" href="#">
+																<i class="ion-android-share-alt"></i>
+															</a>
+															<div class="social-property">
+																<a data-toggle="tooltip" data-placement="top" title="" data-original-title="Share on Facebook" class="share">
+																	<i class="fa fa-facebook"></i>
+																</a>
+																<a data-toggle="tooltip" data-placement="top" title="" data-original-title="Share on Twitter" class="share">
+																	<i class="fa fa-twitter"></i>
+																</a>
+																<a data-toggle="tooltip" data-placement="top" title="" data-original-title="Share on Google+" class="share">
+																	<i class="fa fa-google"></i>
+																</a>
+															</div>
+														</div>
+														<a data-toggle="tooltip" data-placement="top" title="" data-original-title="Compare" class="compare" href="#">
+															<i class="ion-arrow-swap"></i>
+														</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+										<div class="col-md-6">
+										<div class="property-item">
+											<div class="property-item-wrap">
+												<div class="item-head">
+													<h4 class="item-title">
+														<i class="ion-bookmark">AyG Inmobiliaria Ofrecimiento</i> 
+														<a id="id2" href="property-detail.html"></a>
+													</h4>
+													<span id="direccion2" class="location"> </span>
+												</div>
+												<div class="item-featured">
+												<a id="_id2" >
+														<img id="img2"    />
+													</a>
+													<span id="ventaoalquiler2" class="property-status"></span> 
+												</div>
+												<div class="info">
+													<span class="primary-file-1">
+														<i class="icon-ruler"></i> <span id="m26"></span>
+													</span>
+													<span class="primary-file-2">
+														<i class="icon-bed"></i> <span id="dormitorio6"></span>
+													</span>
+													<span class="primary-file-3">
+														<i class="icon-storage"></i> <span></span>
+													</span>
+													<span class="primary-file-4">
+														<i class="icon-bath"></i> <span id="banios6"></span>
+													</span>
+												</div>
+												<div class="action">
+													<div class="price">
+														<span id="precio2" class="amount"></span>
+													</div>
+													<div class="action-post">
+														<a data-toggle="tooltip" data-placement="top"  data-original-title="Favorites" href="#">
 															<i class="fa fa-heart-o"></i>
 														</a>
 														<div class="property-sharing">
@@ -264,37 +781,37 @@
 											<div class="property-item-wrap">
 												<div class="item-head">
 													<h4 class="item-title">
-														<i class="ion-bookmark">Featured</i> 
-														<a href="property-detail.html" title="Villa on Hollywood Boulevard">Villa on Hollywood Boulevard</a>
+														<i class="ion-bookmark">AyG Inmobiliaria Ofrecimiento</i> 
+														<a id="id3" href="property-detail.html"></a>
 													</h4>
-													<span class="location">The Village, Jersey City, NJ 07302, USA </span>
+													<span id="direccion3" class="location"> </span>
 												</div>
 												<div class="item-featured">
-													<a href="property-detail.html" title="Villa on Hollywood Boulevard">
-														<img src="images/property/property_370x210.jpg" alt="Villa on Hollywood Boulevard" />
+													<a id="_id3" >
+														<img id="img3"    />
 													</a>
-													<span class="property-status">For Sale</span> 
+													<span id="ventaoalquiler3" class="property-status"></span> 
 												</div>
 												<div class="info">
 													<span class="primary-file-1">
-														<i class="icon-ruler"></i> <span>2075 m2</span>
+														<i  class="icon-ruler"></i> <span id="m21"></span>
 													</span>
 													<span class="primary-file-2">
-														<i class="icon-bed"></i> <span>3 Bedrooms</span>
+														<i class="icon-bed"></i> <span id="dormitorio1"></span>
 													</span>
 													<span class="primary-file-3">
-														<i class="icon-storage"></i> <span>1 Garages</span>
+														<i class="icon-storage"></i> <span></span>
 													</span>
 													<span class="primary-file-4">
-														<i class="icon-bath"></i> <span>3 Bathrooms</span>
+														<i class="icon-bath"></i> <span id="banios1"></span>
 													</span>
 												</div>
 												<div class="action">
 													<div class="price">
-														<span class="amount">$ &nbsp;356,000</span>
+														<span id="precio3" class="amount"></span>
 													</div>
 													<div class="action-post">
-														<a data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorites" href="#">
+														<a data-toggle="tooltip" data-placement="top"  data-original-title="Favorites" href="#">
 															<i class="fa fa-heart-o"></i>
 														</a>
 														<div class="property-sharing">
@@ -321,42 +838,42 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md-6">
+										<div class="col-md-6">
 										<div class="property-item">
 											<div class="property-item-wrap">
 												<div class="item-head">
 													<h4 class="item-title">
-														<i class="ion-bookmark">Featured</i> 
-														<a href="property-detail.html" title="Park Avenue Apartment">Park Avenue Apartment</a>
+														<i class="ion-bookmark">AyG Inmobiliaria Ofrecimiento</i> 
+														<a id="id4" href="property-detail.html"></a>
 													</h4>
-													<span class="location">London, UK </span>
+													<span id="direccion4" class="location"> </span>
 												</div>
 												<div class="item-featured">
-													<a href="property-detail.html" title="Park Avenue Apartment">
-														<img src="images/property/property_370x210.jpg" alt="Park Avenue Apartment" />
+										<a id="_id4" >
+														<img id="img4"    />
 													</a>
-													<span class="property-status">For Rent</span> 
+													<span id="ventaoalquiler4" class="property-status"></span> 
 												</div>
 												<div class="info">
 													<span class="primary-file-1">
-														<i class="icon-ruler"></i> <span>3450 m2</span>
+														<i class="icon-ruler"></i> <span id="m22"></span>
 													</span>
 													<span class="primary-file-2">
-														<i class="icon-bed"></i> <span>6 Bedrooms</span>
+														<i class="icon-bed"></i> <span id="dormitorio2"></span>
 													</span>
 													<span class="primary-file-3">
-														<i class="icon-storage"></i> <span>2 Garages</span>
+														<i class="icon-storage"></i> <span></span>
 													</span>
 													<span class="primary-file-4">
-														<i class="icon-bath"></i> <span>5 Bathrooms</span>
+														<i class="icon-bath"></i> <span id="banios2"></span>
 													</span>
 												</div>
 												<div class="action">
 													<div class="price">
-														<span class="amount">$ &nbsp;5,000/month</span>
+														<span id="precio4" class="amount"></span>
 													</div>
 													<div class="action-post">
-														<a data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorites" href="#">
+														<a data-toggle="tooltip" data-placement="top"  data-original-title="Favorites" href="#">
 															<i class="fa fa-heart-o"></i>
 														</a>
 														<div class="property-sharing">
@@ -383,38 +900,43 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md-6">
+									
+											<div class="col-md-6">
 										<div class="property-item">
 											<div class="property-item-wrap">
 												<div class="item-head">
 													<h4 class="item-title">
-														<a href="property-detail.html" title="Loft Above The City">Loft Above The City</a>
+														<i class="ion-bookmark">AyG Inmobiliaria Ofrecimiento</i> 
+														<a id="id5" href="property-detail.html"></a>
 													</h4>
-													<span class="location">Hope Street (Stop P), London SW11, UK </span>
+													<span id="direccion5" class="location"> </span>
 												</div>
 												<div class="item-featured">
-													<a href="property-detail.html" title="Loft Above The City">
-														<img src="images/property/property_370x210.jpg" alt="Loft Above The City" />
+													<a id="_id5" >
+														<img id="img5"    />
 													</a>
-													<span class="property-status">For Rent</span> 
+													<span id="ventaoalquiler5" class="property-status"></span> 
 												</div>
 												<div class="info">
 													<span class="primary-file-1">
-														<i class="icon-ruler"></i> <span>2800 m2</span>
+														<i  class="icon-ruler"></i> <span id="m23"></span>
 													</span>
 													<span class="primary-file-2">
-														<i class="icon-bed"></i> <span>6 Bedrooms</span>
+														<i class="icon-bed"></i> <span id="dormitorio3"></span>
 													</span>
 													<span class="primary-file-3">
-														<i class="icon-storage"></i> <span>2 Garages</span>
+														<i class="icon-storage"></i> <span></span>
+													</span>
+													<span class="primary-file-4">
+														<i class="icon-bath"></i> <span id="banios3"></span>
 													</span>
 												</div>
 												<div class="action">
 													<div class="price">
-														<span class="amount">$ &nbsp;55,000/month</span>
+														<span id="precio5" class="amount"></span>
 													</div>
 													<div class="action-post">
-														<a data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorites" href="#">
+														<a data-toggle="tooltip" data-placement="top"  data-original-title="Favorites" href="#">
 															<i class="fa fa-heart-o"></i>
 														</a>
 														<div class="property-sharing">
@@ -441,103 +963,46 @@
 											</div>
 										</div>
 									</div>
+								
 									<div class="col-md-6">
 										<div class="property-item">
 											<div class="property-item-wrap">
 												<div class="item-head">
 													<h4 class="item-title">
-														<i class="ion-bookmark">Featured</i> 
-														<a href="property-detail.html" title="Villa in Melbourne">Villa in Melbourne</a>
+														<i class="ion-bookmark">AyG Inmobiliaria Ofrecimiento</i> 
+														<a id="id6" href="property-detail.html"></a>
 													</h4>
-													<span class="location">NJ 07305, USA </span>
+													<span id="direccion6" class="location"> </span>
 												</div>
 												<div class="item-featured">
-													<a href="property-detail.html" title="Villa in Melbourne">
-														<img src="images/property/property_370x210.jpg" alt="Villa in Melbourne" />
+													<a id="_id6" >
+														<img id="img6"    />
 													</a>
-													<span class="property-status">For Rent</span> 
+													<span id="ventaoalquiler6" class="property-status"></span> 
 												</div>
 												<div class="info">
 													<span class="primary-file-1">
-														<i class="icon-ruler"></i> <span>3450 m2</span>
+														<i class="icon-ruler"></i> <span id="m24"></span>
 													</span>
 													<span class="primary-file-2">
-														<i class="icon-bed"></i> <span>6 Bedrooms</span>
+														<i class="icon-bed"></i> <span id="dormitorio4"></span>
 													</span>
 													<span class="primary-file-3">
-														<i class="icon-storage"></i> <span>2 Garages</span>
+														<i class="icon-storage"></i> <span></span>
 													</span>
 													<span class="primary-file-4">
-														<i class="icon-bath"></i> <span>5 Bathrooms</span>
+														<i class="icon-bath"></i> <span id="banios4"></span>
+									
+
+
 													</span>
 												</div>
 												<div class="action">
 													<div class="price">
-														<span class="amount">$ &nbsp;12,000/month</span>
+														<span id="precio6" class="amount"></span>
 													</div>
 													<div class="action-post">
-														<a data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorites" href="#">
-															<i class="fa fa-heart-o"></i>
-														</a>
-														<div class="property-sharing">
-															<a data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorites" class="like" href="#">
-																<i class="ion-android-share-alt"></i>
-															</a>
-															<div class="social-property">
-																<a data-toggle="tooltip" data-placement="top" title="" data-original-title="Share on Facebook" class="share">
-																	<i class="fa fa-facebook"></i>
-																</a>
-																<a data-toggle="tooltip" data-placement="top" title="" data-original-title="Share on Twitter" class="share">
-																	<i class="fa fa-twitter"></i>
-																</a>
-																<a data-toggle="tooltip" data-placement="top" title="" data-original-title="Share on Google+" class="share">
-																	<i class="fa fa-google"></i>
-																</a>
-															</div>
-														</div>
-														<a data-toggle="tooltip" data-placement="top" title="" data-original-title="Compare" class="compare" href="#">
-															<i class="ion-arrow-swap"></i>
-														</a>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="property-item">
-											<div class="property-item-wrap">
-												<div class="item-head">
-													<h4 class="item-title">
-														<a href="property-detail.html" title="Store Space Greenville">Store Space Greenville</a>
-													</h4>
-													<span class="location">250-260 3rd St, Hoboken, NJ 07030, USA </span>
-												</div>
-												<div class="item-featured">
-													<a href="property-detail.html" title="Store Space Greenville">
-														<img src="images/property/property_370x210.jpg" alt="Store Space Greenville" />
-													</a>
-													<span class="property-status">For Rent</span> 
-												</div>
-												<div class="info">
-													<span class="primary-file-1">
-														<i class="icon-ruler"></i> <span>100 m2</span>
-													</span>
-													<span class="primary-file-2">
-														<i class="icon-bed"></i> <span>6 Bedrooms</span>
-													</span>
-													<span class="primary-file-3">
-														<i class="icon-storage"></i> <span>2 Garages</span>
-													</span>
-													<span class="primary-file-4">
-														<i class="icon-bath"></i> <span>5 Bathrooms</span>
-													</span>
-												</div>
-												<div class="action">
-													<div class="price">
-														<span class="amount">$ &nbsp;25,000/month</span>
-													</div>
-													<div class="action-post">
-														<a data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorites" href="#">
+														<a data-toggle="tooltip" data-placement="top"  data-original-title="Favorites" href="#">
 															<i class="fa fa-heart-o"></i>
 														</a>
 														<div class="property-sharing">
@@ -566,94 +1031,81 @@
 									</div>
 								</div>
 								<span class="pagination-loop">
-									<a class="prev page-numbers" href="#"><i class="ion-ios-arrow-back"></i></a>
-									<a class="page-numbers" href="#">01</a>
-									<span class="page-numbers current">02</span>
-									<a class="page-numbers" href="#">03</a>
-									<a class="next page-numbers" href="#"><i class="ion-ios-arrow-forward"></i></a>
+									<a class="prev page-numbers" onclick="paginaAnterior()"><i class="ion-ios-arrow-back"></i></a>
+									<a id="current" class="page-numbers current"></a>
+								<!-- 	<a  class="page-numbers " href="#">02</a>
+									<a class="page-numbers" href="#">03</a> -->
+									<a class="next page-numbers" onclick="paginaSiguiente()" ><i class="ion-ios-arrow-forward"></i></a>
 								</span>
 							</div>
 						
 							<div class="col-md-3">
 								<div class="sidebar">
 									<div class="widget">
-										<h3 class="widget-title">Find Property</h3>
+										<h3 class="widget-title">Buscar Propiedades</h3>
 										<div class="advanced_search_property vertical">
 											<div class="noo-map">
 												<div class="gsearch">
 													<div class="gsearch-wrap">
-														<form class="gsearchform">
+														<form id="form" class="gsearchform">
 															<div class="gsearch-content">
 																<div class="gsearch-field">
-																	<div class="form-group keyword">
+																	<!-- <div class="form-group keyword">
 																		<input type="text" id="keyword" name="keyword" value="" placeholder="Enter Your Keyword..." class="keyword" autocomplete="off">
-																	</div>
+																	</div> -->
 
-																	<div class="form-group glocation">
-																		<div class="label-select">
-																			<select class="form-control">
-																				<option>All Neighborhood</option>
-																				<option>The Heights</option>
-																				<option>Southwark</option>
-																				<option>Greenville</option>
-																				<option>The Village</option>
-																				<option>York Road</option>
-																				<option>Garden Street</option>
-																			</select>
-																		</div>
-																	</div>
+																   <label for="inputProvincias" class="col-sm-4 control-label">Provincias:</label>
+                                   
+                                      <select onchange="buscarLocalidades()"                                   name="provincias" id="provincias" class="form-control" required="required">
+                                       
+                                      </select>
+                                       <label for="inputLocalidades"  class="col-sm-4 control-label">Localidades:</label>
+                                 
+                                      <select onchange="buscarBarrios()" name="localidades" id="localidades" class="form-control" required="required">
+                                      <!--  <option selected="selected" value="-1">Todas las localidades</option>
+ -->
+                                      </select>
+                                       <label for="inputBarrios"  class="col-sm-4 control-label">Barrios:</label>
+                                 
+                                      <select  name="barrios" id="barrios" class="form-control" required="required">
+                                     <option selected="selected" value="-1">Todas los barrios</option>
 
-																	<div class="form-group gtype">
-																		<div class="label-select">
-																			<select class="form-control">
-																				<option>All Property Types</option>
-																				<option>Apartment</option>
-																				<option>Co-op</option>
-																				<option>Land</option>
-																				<option>Multi-Family Home</option>
-																			</select>
-																		</div>
-																	</div>
+                                      </select>
+                                       <label for="inputOperacion "  class="col-sm-4 control-label">Operaciones</label>
+                                     
+                                      <select  name="operacion" id="operacion" class="form-control" required="required">
+                                       <option selected="selected" value="-1">Todas</option>
+                                         <option  value="1">Alquiler</option>
+                                          <option  value="2">Venta</option>
 
-																	<div class="form-group gbed">
-																		<div class="label-select">
-																			<select class="form-control">
-																				<option>No. of Bedrooms</option>
-																				<option>1</option>
-																				<option>2</option>
-																				<option>3</option>
-																				<option>4</option>
-																				<option>5</option>
-																			</select>
-																		</div>
-																	</div>
 
-																	<div class="form-group gbath">
-																		<div class="label-select">
-																			<select class="form-control">
-																				<option>No. of Bathrooms</option>
-																				<option>1</option>
-																				<option>2</option>
-																				<option>3</option>
-																				<option>4</option>
-																			</select>
-																		</div>
-																	</div>
+                                      </select>
+                                   
+                                     <label for="inputTipo "  class="col-sm-4 control-label">Tipo:</label>
+                                  
+                                      <select  name="tipo" id="tipo" class="form-control" required="required">
+                                       <option selected="selected" value="-1">Todas</option>
+                                         
 
-																	<div class="form-group ggarage">
-																		<div class="label-select">
-																			<select class="form-control">
-																				<option>All Garages</option>
-																				<option>1</option>
-																				<option>2</option>
-																				<option>3</option>
-																				<option>4</option>
-																			</select>
-																		</div>
-																	</div>
+                                      </select>
+                                       <label for="inputDormitorios "  class="col-sm-4 control-label">Dormitorios:</label>
+                                     
+                                      <select  name="dormitorios" id="dormitorios" class="form-control" required="required">
+                                       <option selected="selected" value="-1">Dormitorios</option>
+                                         <option  value="1">1</option>
+                                          <option  value="2">2</option>
+                                           <option  value="3">3</option>
+                                        
 
-																	<div class="form-group gprice">
-																		<span class="gprice-label">Price</span>
+
+                                      </select>
+                               
+
+
+
+																	
+																<!-- 	<div class="form-group gprice">
+																		<span class="gprice-label">Precio</span>
 																		<div class="price_slider_wrapper widget_price_filter">
 																			<div class="price_slider" style="display:none;"></div>
 																			<div class="price_slider_amount">
@@ -665,13 +1117,13 @@
 																				<div class="clear"></div>
 																			</div>
 																		</div>
-																	</div>
+																	</div> -->
 																</div>
 
 																<div class="gsearch-action">
 																	<div class="gsubmit">
-																		<button type="submit" class="button">
-																			<span class="ion-search"></span> Search Property
+																		<button type="button" onclick="filtrarPropiedades()" class="button">
+																			<span class="ion-search"></span> Buscar
 																		</button>
 																	</div>
 																</div>
@@ -919,7 +1371,8 @@
 		<div id="go-to-top" class="go-to-top">
 			<i class="fa fa-angle-up"></i>
 		</div>
-		
+		<script src="//connect.facebook.net/en_US/sdk.js"></script>
+   
 		<script src="js/jquery.min.js"></script>
 		<script src="js/jquery-migrate.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>

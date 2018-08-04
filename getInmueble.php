@@ -5,7 +5,7 @@ include_once('WebService.php');
 
  
  
-    $idInmueble = "16107";
+    $idInmueble = $_GET['idInmueble'];
     
         
    //pasando los parámetros a un array

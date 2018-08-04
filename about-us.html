@@ -25,332 +25,201 @@
 			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 	</head>
+	
+<style>|	
+.mensaje { 
+    color: #008000;
+}
+</style>
+	<script type="text/javascript">
+
+
+function enviarMensaje(){
+
+  alert("Módulo de Mensajería en desarrollo");
+    
+event.preventDefault();
+         $.ajax({
+        type: "POST",
+        dataType:"html",
+        //async: false,
+        url: "enviarMensaje.php",
+      
+    					data: data,
+        success: function (data) {
+            alert(data);
+
+        },
+         error : function(xhr, status) {
+//;
+//$('#recargar').show();
+       
+    },
+
+});
+   }
+
+
+    
+      
+     // }
+       
+
+</script>
 	<body>
 		<div class="site">
-			<header class="header header-desktop">
-				<div class="navbar-wrapper">
-					<div class="topbar">
-						<div class="container">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="topmeta">
-										<i class="fa fa-mobile"></i>
-										Call Us Today <a href="tel:(+1)-800-555-6789">(+1)-800-555-6789</a>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="topmeta topmeta-right pull-right">
-										<a class="popup-login" href="#popup_01" data-init="magnificPopup" data-options='{"type":"inline","removalDelay":700}' data-effect="mfp-3d-unfold" title="Login / Register">Login / Register</a>
-										<!-- popup-content mfp-with-anim mfp-hide -->
-										<div class="popup-content box-login mfp-with-anim mfp-hide" id="popup_01">
-											<h4 class="title">Login</h4>
-											<form class="login-member-container">
-												<div class="social-login-widget">
-													<div class="social-login-connect-with">Connect with:</div>
-													<div class="social-login-provider-list">
-														<a rel="nofollow" href="javascript:void(0);" title="Connect with Facebook" data-provider="Facebook">
-															<img alt="Facebook" title="Connect with Facebook" src="images/icons/facebook.png" />
-														</a>
-														<a rel="nofollow" href="javascript:void(0);" title="Connect with Google" data-provider="Google">
-															<img alt="Google" title="Connect with Google" src="images/icons/google.png" />
-														</a>
-														<a rel="nofollow" href="javascript:void(0);" title="Connect with Twitter" data-provider="Twitter">
-															<img alt="Twitter" title="Connect with Twitter" src="images/icons/twitter.png" />
-														</a>
-													</div>
-												</div>
-												<div class="login-member-wrap">
-													<div class="register-member-left">
-														<div class="item-wrap">
-															<label>User name</label>
-															<input type="text" id="user_name_login" name="user_name_login" value="" placeholder="Please enter User name..." class="required" />
-														</div>
-														<div class="item-wrap">
-															<label>Password</label>
-															<input type="password" id="password_login" name="password_login" value="" placeholder="Please enter Password..." class="required">
-														</div>
-													</div>
-													<div class="login-member-action">
-														<button type="submit" name="login-account" class="button">
-															Login <i class="fa-li fa fa-spinner fa-spin hide"></i>
-														</button>
-														<p>
-															<span>Not have an Account?</span> 
-															<a class="color" href="#" title="Register now!">Register now!</a>
-														</p>
-													</div>
-												</div>
-											</form>
-										</div><!-- End / popup-content mfp-with-anim mfp-hide -->
-										<div class="widget widget-social">
-											<div class="social">
-												<div class="social-all">
-													<a href="#" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a>
-													<a href="#" target="_blank" class="google"><i class="fa fa-google"></i></a>
-													<a href="#" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="navbar navbar-default">
-						<div class="container">
-							<div class="navbar-content">
-								<div class="navbar-header pull-left">
-									<button data-target=".nav-collapse" class="btn-navbar icon-menu" type="button">
-										<i class="fa fa-bars"></i>
-									</button>
-									<a href="./" class="navbar-brand" title="Real Estate HTML Template">
-										<img class="logo-img logo-normal" src="images/logo.png" alt="Real Estate HTML Template" />
-									</a>
-								</div> 
-								<div class="pull-right navbar-meta meta-property">
-									<div class="meta-content">
-										<a href="#" class="meta-property button">
-											<span><i class="fa fa-plus-circle"></i></span>Add Property 
-										</a>
-									</div>
-								</div>
-								<div class="pull-right header-minicart">
-									<div class="widget-shopping-cart-content">
-										<a class="minicart-link-hover" title="View cart" href="cart.html">
-											<i class="ion-android-cart"></i><span>0</span>
-										</a>
-										<div class="wrap-minicart">
-											<ul class="cart_list product_list_widget">
-												<li class="empty">No products in the cart.</li>
-											</ul><!-- end product list -->
-										</div> <!-- /.wrap_minicart -->
-									</div>
-								</div>
-								<nav class="pull-right main-menu">
-									<ul class="nav-collapse navbar-nav">
-										<li>
-											<a href="./">Home</a>
-											<ul class="sub-menu">
-												<li><a href="index.html">Home Advanced Search</a></li>
-												<li><a href="index-2.html">Home Map Vertical</a></li>
-												<li><a href="index-3.html">Home Map Horizontal</a></li>
-												<li><a href="index-4.html">Home Half Map</a></li>
-												<li><a href="index-5.html">Home Search Map</a></li>
-												<li><a href="index-6.html">Home Single Property</a></li>
-												<li><a href="index-7.html">Home Custom 1</a></li>
-												<li><a href="index-8.html">Home Custom 2</a></li>
-												<li><a href="index-9.html">Home Custom 3</a></li>
-											</ul>
-											<i class="fa fa-angle-down"></i>
-										</li>
-										<li>
-											<a href="#">Properties</a>
-											<ul class="sub-menu">
-												<li><a href="properties.html">Property Listing</a></li>
-												<li><a href="property-fullwidth.html">Property FullWidth</a></li>
-												<li><a href="property-left-sidebar.html">Property Left Sidebar</a></li>
-												<li><a href="property-boxed-layout.html">Property Boxed Layout</a></li>
-												<li><a href="property-tab-style.html">Property Tab Style</a></li>
-												<li><a href="property-right-sidebar.html">Property Right Sidebar</a></li>
-												<li><a href="property-landing-page.html">Property Landing Page</a></li>
-											</ul>
-											<i class="fa fa-angle-down"></i>
-										</li>
-										<li>
-											<a href="#">Agents</a>
-											<ul class="sub-menu">
-												<li><a href="agent-list.html">Agents List</a></li>
-												<li><a href="agent-detail.html">Agent Details</a></li>
-											</ul>
-											<i class="fa fa-angle-down"></i>
-										</li>
-										<li class="current">
-											<a href="#">Pages</a>
-											<ul class="sub-menu">
-												<li><a href="header-search-form.html">Header With Search Form</a></li>
-												<li><a href="header-below-map.html">Header Below Map</a></li>
-												<li><a href="header-toggle-menu.html">Header Toggle Menu</a></li>
-												<li><a href="blog.html">Blog List</a></li>
-												<li><a href="blog-mansory.html">Blog Mansory</a></li>
-												<li><a href="blog-detail-fullwidth.html">Blog Details FullWidth</a></li>
-												<li><a href="blog-detail-sidebar.html">Blog Details Sidebar</a></li>
-												<li><a href="agent-package.html">Agent Package</a></li>
-												<li class="current"><a href="about-us.html">About Us</a></li>
-												<li><a href="contact-us.html">Contact Us</a></li>
-												<li><a href="404.html">404 Error</a></li>
-											</ul>
-											<i class="fa fa-angle-down"></i>
-										</li>
-										<li class="megamenu mega-col-4">
-											<a href="#">Shop</a>
-											<ul class="sub-menu">
-												<li>
-													<a href="#">Shop Service</a>
-													<ul class="sub-menu">
-														<li><a href="shop-grid.html">Shop Grid</a></li>
-														<li><a href="shop-list.html">Shop List</a></li>
-														<li><a href="shop-detail.html">Shop Detail</a></li>
-														<li><a href="cart-empty.html">Empty Cart</a></li>
-														<li><a href="cart.html">Cart</a></li>
-														<li><a href="checkout.html">Checkout</a></li>
-														<li><a href="my-account.html">My Account</a></li>
-													</ul>
-													<i class="fa fa-angle-down"></i>
-												</li>
-												<li>
-													<div class="megamenu-widget-area">
-														<div class="widget widget-products">
-															<h3 class="widget-title">Newest</h3>
-															<ul class="product-list-widget">
-																<li>
-																	<a href="shop-detail.html">
-																		<img src="images/placeholder.png" alt="Placeholder" />
-																		<span class="product-title">Free</span>
-																	</a>
-																	<span class="amount">$0</span>
-																</li>
-																<li>
-																	<a href="shop-detail.html">
-																		<img src="images/shop/shop_70x70.jpg" alt="" />
-																		<span class="product-title">Colora Aborate Chair</span>
-																	</a>
-																	<span class="amount">$1,700</span>
-																</li>
-																<li>
-																	<a href="shop-detail.html">
-																		<img src="images/shop/shop_70x70.jpg" alt="" />
-																		<span class="product-title">Chair Group</span>
-																	</a>
-																	<span class="amount">$1,400</span>
-																</li>
-															</ul>
-														</div>
-													</div>
-												</li>
-												<li>
-													<div class="megamenu-widget-area">
-														<div class="widget widget-products">
-															<h3 class="widget-title">Sales</h3>
-															<ul class="product-list-widget">
-																<li>
-																	<a href="shop-detail.html">
-																		<img src="images/shop/shop_70x70.jpg" alt="Placeholder" />
-																		<span class="product-title">Scissor Lamp</span>
-																	</a>
-																	<span class="amount">$456</span>
-																</li>
-																<li>
-																	<a href="shop-detail.html">
-																		<img src="images/shop/shop_70x70.jpg" alt="" />
-																		<span class="product-title">Nakashima Chair</span>
-																	</a>
-																	<span class="amount">$1,135</span>
-																</li>
-																<li>
-																	<a href="shop-detail.html">
-																		<img src="images/shop/shop_70x70.jpg" alt="" />
-																		<span class="product-title">Small Table Lamp</span>
-																	</a>
-																	<span class="amount">$392</span>
-																</li>
-															</ul>
-														</div>
-													</div>
-												</li>
-												<li>
-													<div class="megamenu-widget-area">
-														<div class="widget widget-products">
-															<h3 class="widget-title">Top Rated</h3>
-															<ul class="product-list-widget">
-																<li>
-																	<a href="shop-detail.html">
-																		<img src="images/shop/shop_70x70.jpg" alt="Placeholder" />
-																		<span class="product-title">Oak Form Chair</span>
-																	</a>
-																	<div class="star-rating">
-																		<span style="width:100%"></span>
-																	</div>
-																	<span class="amount">$550</span>
-																</li>
-																<li>
-																	<a href="shop-detail.html">
-																		<img src="images/shop/shop_70x70.jpg" alt="" />
-																		<span class="product-title">Puck Wall Lamp</span>
-																	</a>
-																	<div class="star-rating">
-																		<span style="width:100%"></span>
-																	</div>
-																	<span class="amount">$215</span>
-																</li>
-																<li>
-																	<a href="shop-detail.html">
-																		<img src="images/shop/shop_70x70.jpg" alt="" />
-																		<span class="product-title">Chair Group</span>
-																	</a>
-																	<div class="star-rating">
-																		<span style="width:100%"></span>
-																	</div>
-																	<span class="amount">$225</span>
-																</li>
-															</ul>
-														</div>
-													</div>
-												</li>
-											</ul>
-											<i class="fa fa-angle-down"></i>
-										</li>
-										<li class="megamenu mega-col-4">
-											<a href="#">Features</a>
-											<ul class="sub-menu">
-												<li>
-													<a href="#">Shortcodes</a>
-													<ul class="sub-menu">
-														<li><a href="advances-search-property.html">Advances Search Property</a></li>
-														<li><a href="ads-banner.html">Ads Banner</a></li>
-														<li><a href="faq.html">FAQ</a></li>
-														<li><a href="floor-plan.html">Noo Floor Plan</a></li>
-													</ul>
-													<i class="fa fa-angle-down"></i>
-												</li>
-												<li>
-													<a href="#">Shortcodes</a>
-													<ul class="sub-menu">
-														<li><a href="gallery.html">Gallery</a></li>
-														<li><a href="partner.html">Partner</a></li>
-														<li><a href="progress.html">Noo Progress</a></li>
-													</ul>
-													<i class="fa fa-angle-down"></i>
-												</li>
-												<li>
-													<a href="#">Shortcodes</a>
-													<ul class="sub-menu">
-														<li><a href="service.html">Service</a></li>
-														<li><a href="properties-list.html">Properties list</a></li>
-														<li><a href="single-agent-contact.html">Single Agent Contact</a></li>
-														<li><a href="single-property.html">Single Property</a></li>
-													</ul>
-													<i class="fa fa-angle-down"></i>
-												</li>
-												<li>
-													<a href="#">Shortcodes</a>
-													<ul class="sub-menu">
-														<li><a href="single-property-banner.html">Single property Banner</a></li>
-														<li><a href="single-property-detail.html">Single Property Detail</a></li>
-														<li><a href="single-property-featured.html">Single property featured</a></li>
-														<li><a href="single-property-map.html">Single Property Map</a></li>
-													</ul>
-													<i class="fa fa-angle-down"></i>
-												</li>
-											</ul>
-											<i class="fa fa-angle-down"></i>
-										</li>
-									</ul>
-								</nav>
-							</div>
-						</div>
-					</div>
-				</div>
-			</header>
+			<header>
+    <div class="site">
+      <header class="header header-desktop">
+        <div class="navbar-wrapper">
+          <div class="topbar">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="topmeta">
+                    <i class="fa fa-mobile"></i>
+                    Contáctenos <a href="tel:(+54)-9 0342-4592413/88 – 0342-156300313">(+54)-9 0342-4592413/88 – 0342-156300313</a>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="topmeta topmeta-right pull-right">
+                    <a class="popup-login" href="#popup_01" data-init="magnificPopup" data-options='{"type":"inline","removalDelay":700}' data-effect="mfp-3d-unfold" title="Login / Register">Login / Registrarme</a>
+                    <!-- popup-content mfp-with-anim mfp-hide -->
+                    <div class="popup-content box-login mfp-with-anim mfp-hide" id="popup_01">
+                      <h4 class="title">Login</h4>
+                      <form class="login-member-container">
+                        <div class="social-login-widget">
+                          <div class="social-login-connect-with">Ingresar mediante:</div>
+                          <div class="social-login-provider-list">
+                            <a rel="nofollow" href="javascript:void(0);" title="Connect with Facebook" data-provider="Facebook">
+                              <img alt="Facebook" title="Connect with Facebook" src="images/icons/facebook.png" />
+                            </a>
+                            <a rel="nofollow" href="javascript:void(0);" title="Connect with Google" data-provider="Google">
+                              <img alt="Google" title="Connect with Google" src="images/icons/google.png" />
+                            </a>
+                            <a rel="nofollow" href="javascript:void(0);" title="Connect with Twitter" data-provider="Twitter">
+                              <img alt="Twitter" title="Connect with Twitter" src="images/icons/twitter.png" />
+                            </a>
+                          </div>
+                        </div>
+                        <div class="login-member-wrap">
+                          <div class="register-member-left">
+                            <div class="item-wrap">
+                              <label>Usuario</label>
+                              <input type="text" id="user_name_login" name="user_name_login" value="" placeholder="Por favor ingrese su nombre de Usuario..." class="required" />
+                            </div>
+                            <div class="item-wrap">
+                              <label>Contraseña</label>
+                              <input type="password" id="password_login" name="password_login" value="" placeholder="Por favor ingrese su contraseña..." class="required">
+                            </div>
+                          </div>
+                          <div class="login-member-action">
+                            <button type="submit" name="login-account" class="button">
+                              Login <i class="fa-li fa fa-spinner fa-spin hide"></i>
+                            </button>
+                            <p>
+                              <span>No tienes cuenta?</span> 
+                              <a class="color" href="#" title="Register now!">Registrarme ahora!</a>
+                            </p>
+                          </div>
+                        </div>
+                      </form>
+                    </div><!-- End / popup-content mfp-with-anim mfp-hide -->
+                    <div class="widget widget-social">
+                      <div class="social">
+                        <div class="social-all">
+                          <a href="https://es-la.facebook.com/aygsantafe/" target="_blank" class="facebook"><i class="fa fa-facebook"></i><span>Facebook</span></a>
+                          <!-- <a href="#" target="_blank" class="google"><i class="fa fa-google"></i></a> -->
+                          <a href="https://www.instagram.com/ayginmobiliaria/" target="_blank" class="twitter"><i class="fa fa-instagram"></i><span>Instagram</span></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="navbar navbar-default">
+            <div class="container">
+              <div class="navbar-content">
+                <div class="navbar-header pull-left">
+                  <button data-target=".nav-collapse" class="btn-navbar icon-menu" type="button">
+                    <i class="fa fa-bars"></i>
+                  </button>
+                  <a href="./" class="navbar-brand" title="Ayg Inmobiliaria">
+                    <img class="logo-img logo-normal" src="images/logo.png" alt="AyG Inmobiliaria" />
+                  </a>
+                </div> 
+           
+                
+<!--..................................................-Carrito....................................................-->
+
+                <!-- <div class="pull-right header-minicart">
+                  <div class="widget-shopping-cart-content">
+                    <a class="minicart-link-hover" title="Ver carrito" href="cart.html">
+                      <i class="ion-android-cart"></i><span>0</span>
+                    </a>
+                    <div class="wrap-minicart">
+                      <ul class="cart_list product_list_widget">
+                        <li class="empty">Ningún producto en el carrito.</li> -->
+                    <!--  </ul> end product list -->
+                  <!--  </div>  /.wrap_minicart -->
+                  <!-- </div>
+                </div> -->
+                <!--......................... FIN Carrito...... -->
+                <nav class="pull-right main-menu">
+                  <ul class="nav-collapse navbar-nav">
+                    <li class="current">
+                      <a href="./">Principal</a>
+                      <ul class="sub-menu">
+                      <!--  <li class="current"><a href="index.html">Home Principal</a></li> -->
+                        <!-- <li><a href="index-2.html">Home Map Vertical</a></li>
+                        <li><a href="index-3.html">Home Map Horizontal</a></li>
+                        <li><a href="index-4.html">Home Half Map</a></li>
+                        <li><a href="index-5.html">Home Search Map</a></li>
+                        <li><a href="index-6.html">Home Single Property</a></li> -->
+                        <!-- <li><a href="index-7.html">Home Alternativo </a></li> -->
+                        <!-- <li><a href="index-8.html">Home Custom 2</a></li>
+                        <li><a href="index-9.html">Home Custom 3</a></li> -->
+                      </ul>
+                      <i class="fa fa-angle-down"></i>
+                    </li>
+                    <li>
+                      <a href="./properties.html?provincia=-1&localidad=-1&barrio=-1&operacion=-1&tipo=-1&dormitorio=-1&pag=0">Propiedades</a>
+                      <ul class="sub-menu">
+                        <!-- <li><a href="properties.html">Listado de Nuestras Propiedades</a></li> -->
+                      <!--  <li><a href="property-fullwidth.html">Property FullWidth</a></li>
+                        <li><a href="property-left-sidebar.html">Property Left Sidebar</a></li>
+                        <li><a href="property-boxed-layout.html">Property Boxed Layout</a></li>
+                        <li><a href="property-tab-style.html">Property Tab Style</a></li>
+                        <li><a href="property-right-sidebar.html">Property Right Sidebar</a></li>
+                        <li><a href="property-landing-page.html">Property Landing Page</a></li> -->
+                      </ul>
+                      <i class="fa fa-angle-down"></i>
+                    </li>
+                    <li>
+                      <a href="agent-list.html">Agentes</a>
+                      <ul class="sub-menu">
+                        <!-- <li><a href="agent-list.html">Listado de Nuestros Agentes</a></li> -->
+                        <!-- <li><a href="agent-detail.html">Agentes Detalles</a></li> -->
+                      </ul>
+                      <i class="fa fa-angle-down"></i>
+                    </li>
+                    <li>
+                      <a href="about-us.html">Nosotros</a>
+                      <ul class="sub-menu">
+                        
+                      </ul>
+                      <i class="fa fa-angle-down"></i>
+                    </li>
+                    
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
 			<div id="main">
 				<div class="section section-overlay-2 section-bg-7 mt-10">
 					<div class="container">
@@ -358,8 +227,8 @@
 							<div class="col-md-5">
 								<div class="faq">
 									<h3 class="title">
-										<span class="sub-title">We are</span>
-										<span class="first-word">Land</span>mark
+										<span class="sub-title">Somos</span>
+										<span class="first-word">AyG</span>Inmobiliara
 									</h3>
 									<div class="faq-group">
 										<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -367,14 +236,14 @@
 												<div class="panel-heading active" role="tab" id="headingOne">
 													<h4 class="panel-title">
 														<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-															Who are we?
+															Quiénes somos?
 														</a>
 														<i class="toggle-icon ion-plus"></i>
 													</h4>
 												</div>
 												<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 													<div class="panel-body">
-														Whether you’re looking for property for sale in New York area or property for rent, Landmark makes searching easy. Use our unique geolocation mapping feature to root-out your ideal villa, townhouse or apartment and contact the owners direct. We will help you find your dream ...
+														Somos una Empresa de la Región Santafesina, al servicio de nuestros clientes desde hace  X Años. Nos caracteriza el compromiso, la cordialidad y el profesionalismo, con todos aquellos que estan en busca del sueño de encontrar la propiedad adecuada.
 													</div>
 												</div>
 											</div>
@@ -382,14 +251,14 @@
 												<div class="panel-heading" role="tab" id="headingTwo">
 													<h4 class="panel-title">
 														<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-															How can we help you?
+															Como podemos ayudarle?
 														</a>
 														<i class="toggle-icon ion-plus"></i>
 													</h4>
 												</div>
 												<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 													<div class="panel-body">
-														Whether you’re looking for property for sale in New York area or property for rent, Landmark makes searching easy. Use our unique geolocation mapping feature to root-out your ideal villa, townhouse or apartment and contact the owners direct. We will help you find your dream ...
+														Si busca propiedades en venta en el área de la Regíon Santafesina o propiedades en alquiler, AyG facilita la búsqueda. Utilice nuestro buscador, o comuníquese directamente con nuestros Agentes comerciales. Te ayudaremos a cumplir tus sueño y a superar sus expectativas...
 													</div>
 												</div>
 											</div>
@@ -397,14 +266,14 @@
 												<div class="panel-heading" role="tab" id="headingThree">
 													<h4 class="panel-title">
 														<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-															How small are our commissions
+															Algo mas que poner aca
 														</a>
 														<i class="toggle-icon ion-plus"></i>
 													</h4>
 												</div>
 												<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
 													<div class="panel-body">
-														Whether you’re looking for property for sale in New York area or property for rent, Landmark makes searching easy. Use our unique geolocation mapping feature to root-out your ideal villa, townhouse or apartment and contact the owners direct. We will help you find your dream ...
+													bla bla bla bla bla bla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla bla...
 													</div>
 												</div>
 											</div>
@@ -421,355 +290,177 @@
 					</div>
 					<span class="skew"></span>
 				</div>
-				<div class="section mt-9 mb-12">
+			<div id="main">
+				<div class="section mt-7 mb-10">
 					<div class="container">
 						<div class="row">
 							<div class="col-md-12">
-								<div class="section-title">
-									<div class="wrap-title">
-										<h3 class="title">
-											<span class="first-word">Our</span> Service
-										</h3>
-										<p class="sub-title">
-											<i class="icon-decotitle"></i>
-											We provide residential, commercial and rural property solutions for buyers &amp; sellers.
-										</p>
+								<div class="contact-information">
+									<div class="row">
+										<div class="col-md-6">
+											<h3 class="title">Estemos en Contacto</h3>
+											<p>Nuestro equipo de agentes de Ayg Inmobliario, esta esperando su consulta o inquietud. A la brevedad estaremos contactándolo para satisfacer su consulta.</p>
+											<div class="wrap-info">
+												<div class="info-item">
+													<span class="info-icon"><i class="fa fa-map-marker"></i></span>
+													<p class="info-text">180 St West Side, New York, USA</p>
+												</div>
+												<div class="info-item">
+													<span class="info-icon"><i class="fa fa-phone"></i></span>
+													<p class="info-text">(+1)-800-555-6789</p>
+												</div>
+												<div class="info-item">
+													<span class="info-icon"><i class="fa fa-envelope"></i></span>
+													<p class="info-text">contact.usa@landmark.com</p>
+												</div> 
+											</div> 
+										</div>
+									<div class="mensaje">
+										<div class="col-md-6">
+											<h3 class="title">Envíe su Mensaje</h3>
+											<form class="contact-form">
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-item">
+															<input   style="color:#545151;" type="text" name="your-name" value="" size="40" placeholder="Nombre y Apellido" />
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-item">
+															<input  style="color:#545151;" type="email" name="your-email" value="" size="40" placeholder="Correo Electrónico" />
+														</div>
+													</div>
+													<div class="col-md-12">
+														<div class="form-item form-textarea">
+															<textarea  style="color:#545151;" name="your-message" cols="40" rows="10" placeholder="Mensaje"></textarea>
+														</div>
+													</div>
+													<div class="col-md-12">
+														<button id="enviar"  onclick="enviarMail()" class="button">Enviar Mensaje</button>
+													</div>
+												</div>
+											</form>
+										</div>
+										</div>
 									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-3 col-sm-6">
-								<div class="service-item">
-									<div class="service-icon icon-mapmarker">
-										<span class="icon icon-price-house"></span>
-									</div>
-									<h4 class="service-title">Saling Service</h4>
-									<p>We recognize that there's much more to selling a property than recommending an asking price.</p>
-								</div>
-							</div>
-							<div class="col-md-3 col-sm-6">
-								<div class="service-item">
-									<div class="service-icon icon-mapmarker">
-										<span class="icon icon-rent"></span>
-									</div>
-									<h4 class="service-title">Renting Service</h4>
-									<p>Our commercial offering ranges from the management of rental properties, acquisition.</p>
-								</div>
-							</div>
-							<div class="col-md-3 col-sm-6">
-								<div class="service-item">
-									<div class="service-icon icon-mapmarker">
-										<span class="icon icon-painting"></span>
-									</div>
-									<h4 class="service-title">Property Listing</h4>
-									<p>Our lettings experts can help you find what you are looking for - whether that's a new home, a tenant.</p>
-								</div>
-							</div>
-							<div class="col-md-3 col-sm-6">
-								<div class="service-item">
-									<div class="service-icon icon-mapmarker">
-										<span class="icon icon-safe-house"></span>
-									</div>
-									<h4 class="service-title">Property Management</h4>
-									<p>We help landlords let their property, whether that's helping them understand lettings legislation.</p>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<div class="btlink">
-									<a class="readmore" href="#">Read more </a>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="section section-overlay-3 section-about-group section-bg-8">
-					<div class="container">
+				<div class="col-md-5">
+								<div class="faq">
+				<h3 class="title">
+										<span class="sub-title">Nos</span>
+										<span class="first-word">Encontramos</span> Aquí
+				</h3>
+			</div>
+			</div>
+				<div class="section">
+					<div class="container-fluid">
 						<div class="row">
-							<div class="col-md-8 pl-30">
-								<div class="skills has-image">
-									<div class="progress-header">
-										<h3 class="title">About Us</h3>
-										<p>Landmark is a global real estate services provider listed on the America Stock Exchange. We have an international network of more than 700 offices.</p>
-									</div>
-									<div class="progress-content">
-										<div class="progress-wraper group-progressbar mb-2">
-											<div class="block-progressbar" data-color="#f9a11b">
-												<h3 class="progress-title">Price</h3>
-												<div class="progresswrap">
-													<div role="progressbar" data-transitiongoal="87" class="progressbar"></div>
-												</div>
-											</div>
-										</div>
-										<div class="progress-wraper group-progressbar mb-2">
-											<div class="block-progressbar" data-color="#f9a11b">
-												<h3 class="progress-title">Quality</h3>
-												<div class="progresswrap">
-													<div role="progressbar" data-transitiongoal="69" class="progressbar"></div>
-												</div>
-											</div>
-										</div>
-										<div class="progress-wraper group-progressbar mb-2">
-											<div class="block-progressbar" data-color="#f9a11b">
-												<h3 class="progress-title">Brand</h3>
-												<div class="progresswrap">
-													<div role="progressbar" data-transitiongoal="61" class="progressbar"></div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<img src="images/image_306x435.jpg" alt="about" />
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="popup-video">
-									<a class="popup-youtube" href="//vimeo.com/251275461"><span><span></span></span></a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<span class="skew"></span>
-				</div>
-				<div class="section mt-10 mb-11">
-					<div class="container">
-						<div class="row">
-							<div class="col-md-12">
-								<div class="section-title">
-									<div class="wrap-title">
-										<h3 class="title">
-											<span class="first-word">Our</span> Team
-										</h3>
-										<p class="sub-title">
-											<i class="icon-decotitle"></i>
-											Lorem Ipsum is simply dummy text of the printing.
-										</p>
-									</div>
-								</div>
-								<div class="agent-carousel row" data-auto-play="false" data-desktop="4" data-laptop="3" data-tablet="2" data-mobile="1">
-									<div class="agent-item">
-										<div class="thumbnail">
-											<a href="agent-detail.html" title="Bruck Banner">
-												<img src="images/team/team_253x295.jpg" alt="Bruck Banner" />
-											</a>
-											<span class="line"><span></span></span>
-										</div>
-										<div class="content">
-											<h4 class="name-agent">
-												<a href="agent-detail.html" title="Bruck Banner">Bruck Banner</a>
-											</h4>
-											<span class="position">Developer</span>
-											<div class="agent-social">
-												<a class="facebook" href="#"><i class="fa fa-facebook"></i></a>
-												<a class="twitter" href="#"><i class="fa fa-twitter"></i></a>
-												<a class="google_plus" href="#"><i class="fa fa-google"></i></a>
-												<a class="vimeo" href="#"><i class="fa fa-vimeo"></i></a>
-											</div>
-										</div>
-									</div>
-									<div class="agent-item">
-										<div class="thumbnail">
-											<a href="agent-detail.html" title="Kent Pather">
-												<img src="images/team/team_253x295.jpg" alt="Kent Pather" />
-											</a>
-											<span class="line"><span></span></span>
-										</div>
-										<div class="content">
-											<h4 class="name-agent">
-												<a href="agent-detail.html" title="Kent Pather">Kent Pather</a>
-											</h4>
-											<span class="position">Sales Executive</span>
-											<div class="agent-social">
-												<a class="facebook" href="#"><i class="fa fa-facebook"></i></a>
-												<a class="twitter" href="#"><i class="fa fa-twitter"></i></a>
-												<a class="google_plus" href="#"><i class="fa fa-google"></i></a>
-												<a class="vimeo" href="#"><i class="fa fa-vimeo"></i></a>
-											</div>
-										</div>
-									</div>
-									<div class="agent-item">
-										<div class="thumbnail">
-											<a href="agent-detail.html" title="Henry Silver">
-												<img src="images/team/team_253x295.jpg" alt="Henry Silver" />
-											</a>
-											<span class="line"><span></span></span>
-										</div>
-										<div class="content">
-											<h4 class="name-agent">
-												<a href="agent-detail.html" title="Henry Silver">Henry Silver</a>
-											</h4>
-											<span class="position">Selling Agent</span>
-											<div class="agent-social">
-												<a class="facebook" href="#"><i class="fa fa-facebook"></i></a>
-												<a class="twitter" href="#"><i class="fa fa-twitter"></i></a>
-												<a class="google_plus" href="#"><i class="fa fa-google"></i></a>
-												<a class="vimeo" href="#"><i class="fa fa-vimeo"></i></a>
-											</div>
-										</div>
-									</div>
-									<div class="agent-item">
-										<div class="thumbnail">
-											<a href="agent-detail.html" title="Scarlet Atkinson">
-												<img src="images/team/team_253x295.jpg" alt="Scarlet Atkinson" />
-											</a>
-											<span class="line"><span></span></span>
-										</div>
-										<div class="content">
-											<h4 class="name-agent">
-												<a href="agent-detail.html" title="Scarlet Atkinson">Scarlet Atkinson</a>
-											</h4>
-											<span class="position">Real Estate Broker</span>
-											<div class="agent-social">
-												<a class="facebook" href="#"><i class="fa fa-facebook"></i></a>
-												<a class="twitter" href="#"><i class="fa fa-twitter"></i></a>
-												<a class="google_plus" href="#"><i class="fa fa-google"></i></a>
-												<a class="vimeo" href="#"><i class="fa fa-vimeo"></i></a>
-											</div>
-										</div>
-									</div>
-									<div class="agent-item">
-										<div class="thumbnail">
-											<a href="agent-detail.html" title="Sarah Barabova">
-												<img src="images/team/team_253x295.jpg" alt="Sarah Barabova" />
-											</a>
-											<span class="line"><span></span></span>
-										</div>
-										<div class="content">
-											<h4 class="name-agent">
-												<a href="agent-detail.html" title="Sarah Barabova">Sarah Barabova</a>
-											</h4>
-											<span class="position">Buying Agent</span>
-											<div class="agent-social">
-												<a class="facebook" href="#"><i class="fa fa-facebook"></i></a>
-												<a class="twitter" href="#"><i class="fa fa-twitter"></i></a>
-												<a class="google_plus" href="#"><i class="fa fa-google"></i></a>
-												<a class="vimeo" href="#"><i class="fa fa-vimeo"></i></a>
-											</div>
-										</div>
-									</div>
-									<div class="agent-item">
-										<div class="thumbnail">
-											<a href="agent-detail.html" title="Barack Ocean">
-												<img src="images/team/team_253x295.jpg" alt="Barack Ocean" />
-											</a>
-											<span class="line"><span></span></span>
-										</div>
-										<div class="content">
-											<h4 class="name-agent">
-												<a href="agent-detail.html" title="Barack Ocean">Barack Ocean</a>
-											</h4>
-											<span class="position">Sales Executive</span>
-											<div class="agent-social">
-												<a class="facebook" href="#"><i class="fa fa-facebook"></i></a>
-												<a class="twitter" href="#"><i class="fa fa-twitter"></i></a>
-												<a class="google_plus" href="#"><i class="fa fa-google"></i></a>
-												<a class="vimeo" href="#"><i class="fa fa-vimeo"></i></a>
-											</div>
-										</div>
-									</div>
-								</div>
+							<div class="col-md-12 p-0">
+								<div id="googleMap" data-icon="images/icon_location.png" data-lat="-31.653344" data-lon="-60.710839"></div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<footer class="footer">
+		<footer class="footer">
 				<div class="main-footer">
 					<div class="colophon wigetized">
 						<div class="container">
 							<div class="row">
 								<div class="footer-column-item col-md-3 col-sm-6">
 									<div class="widget widget_text">
-										<h4 class="widget-title">Landmark</h4>
+										<h4 class="widget-title">AyG</h4>
 										<div class="textwidget">
-											<p>Landmark brings wide range of choice, steadily updated property list and market trend ...</p>
+											<p>AyG ofrece amplia gama de opciones, una gran lista de propiedades constantemente actualizadas según la tendencia del mercado ...</p>
 											<ul class="contact-info">
-												<li><i class="fa fa-map-marker"></i>180 St West Side, New York, USA</li>
+												<li><i class="fa fa-map-marker"></i>Corrientes 2761, Santa Fe Argentina</li>
 												<li><i class="fa fa-phone"></i>(+1)-800-555-6789</li>
-												<li><i class="fa fa-envelope"></i>contact.usa@landmark.com</li>
+												<li><i class="fa fa-envelope"></i>contacto@ayg.com.ar</li>
 											</ul>
 										</div>
 									</div>
 								</div>
 								<div class="footer-column-item col-md-3 col-sm-6">
 									<div class="widget widget_text">
-										<h4 class="widget-title">Opening time</h4>
+										<h4 class="widget-title">Horarios de Atención</h4>
 										<div class="textwidget">
 											<ul class="open-info">
-												<li>Mon - Fri: 8AM - 10PM</li>
-												<li>Sat: 9AM - 8PM</li>
-												<li>Sun: Closed</li>
-												<li>We Work All The Holidays</li>
+												<li>Lunes a Viernes: 8AM - 8PM</li>
+												<li>Sábado: 9AM - 14PM</li>
+												<li>Domingo: Cerrado</li>
+												
 											</ul>
 										</div>
 									</div>
 								</div>
 								<div class="footer-column-item col-md-3 col-sm-6">
 									<div class="widget widget_nav_menu">
-										<h4 class="widget-title">Useful Link</h4>
+										<h4 class="widget-title">Links Útiles</h4>
 										<ul class="menu">
-											<li><a href="#">Terms of Use</a></li>
-											<li><a href="#">About US</a></li>
-											<li><a href="#">Privacy Policy</a></li>
-											<li><a href="#">Contact Support</a></li>
-											<li><a href="#">Careers</a></li>
-											<li><a href="#">FAQs</a></li>
+											<li><a href="#">Términos de Uso</a></li>
+											<li><a href="#">Sobre Nosotros</a></li>
+											<li><a href="#">Políticas de Privacidad</a></li>
+										<!-- 	<li><a href="#">Contacto Soporte</a></li> -->
+										<!-- 	<li><a href="#">Careers</a></li>
+											<li><a href="#">FAQs</a></li> -->
 										</ul>
 									</div>
 								</div>
 								<div class="footer-column-item col-md-3 col-sm-6">
 									<div class="widget widget_recent_property">
-										<h4 class="widget-title">Latest Properties</h4>
+										<h4 class="widget-title">Últimas Propiedades</h4>
 										<div class="recent-property-wrap">
 											<div class="recent-property-item">
 												<div class="thumbnail">
 													<a href="property-detail.html" title="Family House in Hudson">
-														<img src="images/property/property_70x70.jpg" alt="Family House in Hudson" />
+														<img id="imgfooter1" />
 													</a>
 												</div>
 												<div class="content">
 													<div class="item-title">
-														<a href="property-detail.html" title="Family House in Hudson">
-															Family House in Hudson
+														<a  id="direccion1footer" href="property-detail.html" >
+															
 														</a>
 													</div>
 													<div class="price">
-														<span class="amount">$ &nbsp;127,000</span>
+														<span id="precio1footer" class="amount"></span>
 													</div>
 												</div>
 											</div>
 											<div class="recent-property-item">
 												<div class="thumbnail">
 													<a href="property-detail.html" title="Loft Above The City">
-														<img src="images/property/property_70x70.jpg" alt="Loft Above The City" />
+														<img id="imgfooter2" />
 													</a>
 												</div>
 												<div class="content">
 													<div class="item-title">
-														<a href="property-detail.html" title="Loft Above The City">
-															Loft Above The City
+														<a  id="direccion2footer" href="property-detail.html" >
+															
 														</a>
 													</div>
 													<div class="price">
-														<span class="amount">$ &nbsp;84,000</span>
+														<span id="precio2footer" class="amount"></span>
 													</div>
 												</div>
 											</div>
 											<div class="recent-property-item">
 												<div class="thumbnail">
-													<a href="property-detail.html" title="Villa on Hollywood Boulevard">
-														<img src="images/property/property_70x70.jpg" alt="Villa on Hollywood Boulevard" />
+													<a href="property-detail.html" >
+														<img id="imgfooter3"   />
 													</a>
 												</div>
 												<div class="content">
 													<div class="item-title">
-														<a href="property-detail.html" title="Villa on Hollywood Boulevard">
-															Villa on Hollywood Boulevard
+														<a id="direccion3footer" href="property-detail.html"
 														</a>
 													</div>
 													<div class="price">
-														<span class="amount">$ &nbsp;395,000</span>
+														<span id="precio3footer" class="amount"></span>
 													</div>
 												</div>
 											</div>
@@ -784,11 +475,11 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-sm-6">
-								© 2018. Copyright <i class="fa fa-heart color"></i> by TK-Themes 
+								© 2018. Copyright by  <i class="fa fa-heart color"></i> <a style="color: #7357FF"  href="http://www.dreamarsoft.com.ar">DreamArSoft</a>
 							</div>
 							<div class="col-sm-6">
 								<div class="footer-social text-right text-center-xs">
-									<a href="#" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a>
+									<a href="https://es-la.facebook.com/aygsantafe/" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a>
 									<a href="#" target="_blank" class="google"><i class="fa fa-google"></i></a>
 									<a href="#" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a>
 									<a href="#" target="_blank" class="youtube"><i class="fa fa-youtube"></i></a>
@@ -817,5 +508,6 @@
 		<script src="js/off-cavnass.js"></script>
 		<script src="js/jquery.magnific-popup.min.js"></script>
 		<script src="js/script.js"></script>
+		<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBVNWemLueU9EzCU6bYnsBaHXf6OJpl6Wc&amp;sensor=false"></script>
 	</body>
 </html>
