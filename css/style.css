@@ -1731,7 +1731,7 @@ header .navbar-meta.meta-property .meta-content .meta-property {
     filter: alpha(opacity=100);
 }
 .main-menu li.megamenu > .sub-menu > li .megamenu-widget-area li span.amount {
-    font-size: 14px;
+    font-size: 8px;
 }
 .main-menu .navbar-nav li.current > a,
 .main-menu .navbar-nav li:hover > a,

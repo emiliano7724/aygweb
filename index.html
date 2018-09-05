@@ -16,7 +16,8 @@
 		<link rel="stylesheet" href="css/owl.theme.css" type="text/css" media="all"/>
 		<link rel="stylesheet" href="css/style.css" type="text/css" media="all"/>
 		<link rel="stylesheet" href="css/custom.css" type="text/css" media="all"/>
-		<link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i%7CExo:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i%7CExo:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
 <script src="js/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -37,8 +38,8 @@
     width: 100%;
     height: 100%;
     z-index: 9999;
-    background: url('images/pageLoader.gif') 50% 50% no-repeat rgb(249,249,249);
-    opacity: .8;
+    background: url('images/pageLoaderInicio.gif') 50% 50% no-repeat rgb(249,249,249);
+    opacity: .9;
 }
 	</style>
 	<script type="text/javascript">
@@ -61,10 +62,12 @@
  
 
 try{
+getPropiedadesDestacadas();
+getPropiedades();
 getProvincias();
 buscarTiposInmueble();
-getPropiedades();
-getPropiedadesDestacadas();
+
+
 }catch(e){
 //alert(e);
 
@@ -74,7 +77,7 @@ getPropiedadesDestacadas();
 
 function filtarPropiedades(){
 
-;
+
 var pagina=0;
 var provincia=document.getElementById("provincias").value;
  var localidad=document.getElementById("localidades").value;
@@ -145,7 +148,7 @@ document.getElementById("localidades").length=0;
     
       });
       }); 
-         $(".loader").fadeOut("slow");            
+               
     },
     error: function(data) {
     //  alert("Ocurrio un error Ws getLocalidades "+data);
@@ -185,7 +188,7 @@ document.getElementById("barrios").length=0;
     
       });
       }); 
-         $(".loader").fadeOut("slow");            
+                 
     },
     error: function(data) {
     //  alert("Ocurrio un error Ws getLocalidades "+data);
@@ -259,14 +262,36 @@ var dormitorio=-1;
         };
 
 
-
+if (!(sessionStorage.getItem("dataPropiedadesDestacadas"))) {
    $.ajax({
     data: parametros,
     type: "GET",
     url: 'getInmuebles.php', 
     dataType: "html",
     success: function(data){
-   var precios= [];
+    sessionStorage.setItem("dataPropiedadesDestacadas",data);
+
+ var datos= sessionStorage.getItem("dataPropiedadesDestacadas");
+
+  
+recorrerJsonPropiedadesDestacadas(datos);
+ 
+     
+    },
+    error: function(data) {
+   //  alert(data);
+    }
+  });
+    }else{
+  
+  var datos= sessionStorage.getItem("dataPropiedadesDestacadas");
+ 
+recorrerJsonPropiedadesDestacadas(datos);
+}
+
+}
+function recorrerJsonPropiedadesDestacadas(datos){
+  var precios= [];
    var ids= [];
    var idV= [];
    var direcciones= [];
@@ -276,7 +301,7 @@ var dormitorio=-1;
    //var imagenes= [];
 
 
-      $.each(JSON.parse(data),function(key, registro) {
+      $.each(JSON.parse(datos),function(key, registro) {
             //  alert(data);
                 $.each(registro.ResultList.InmuebleResumidoDTO,function(key1, registro1) {
 
@@ -302,14 +327,14 @@ var dormitorio=-1;
    idV.push(idIn);
      dormitorios.push(dormitorio);
    descbanios.push(descbanio);
-    	//$("#titulo1").text(titulo);
+      //$("#titulo1").text(titulo);
      
 ///////////////////////////////////////////////
       $("#precioD").text(precios[0]);
           $("#direccionD").text(direcciones[0]);
       $("#idD").text(ids[0]+"#"+idV[0]);
                     idInmueble1=idV[0];
-        $("#idD").attr("href", "./property-detail.html?idInmueble="+idInmueble1);
+        $("#idD").attr("href", "./property-detail.html?idInmueble="+idInmueble1+"&codigo="+ids[0]);
 //$("#imgD").attr("src",imagenes[0]);
          
       
@@ -322,15 +347,9 @@ var dormitorio=-1;
   $("#baniosD").text(descbanios[0]+ " Baño/s");
 
       });
-       
+             
       }); 
-      $(".loader").fadeOut("slow");          
-    },
-    error: function(data) {
-     // alert(data);
-    }
-  });
-
+    $(".loader").fadeOut("slow"); 
 
 }
 
@@ -363,55 +382,78 @@ var dormitorio=-1;
         };
 
 
-
+if (!(sessionStorage.getItem("dataPropiedades"))) {
    $.ajax({
     data: parametros,
     type: "GET",
     url: 'getInmuebles.php', 
     dataType: "html",
     success: function(data){
-   var precios= [];
+      sessionStorage.setItem("dataPropiedades",data);
+
+ var datos= sessionStorage.getItem("dataPropiedades");
+
+  
+recorrerJsonPropiedades(datos);
+             
+    },
+    error: function(data) {
+     // alert(data);
+    }
+  });
+   }else{
+  
+  var datos= sessionStorage.getItem("dataPropiedades");
+ 
+recorrerJsonPropiedades(datos);
+}
+
+  } 
+ function recorrerJsonPropiedades(datos){
+ var precios= [];
    var ids= [];
    var direcciones= [];
    var tipos= [];
    var imagenes= [];
-
+var idV= [];
   var dormitorios=[];
    var descbanios=[];
-      $.each(JSON.parse(data),function(key, registro) {
-         $.each(registro.ResultList.InmuebleResumidoDTO,function(key1, registro1) {
+        $.each(JSON.parse(datos),function(key, registro) {
+        $.each(registro.ResultList.InmuebleResumidoDTO,function(key1, registro1) {
 
 
-
-  var id=registro1.IdInmueble;
+  var id=registro1.Codigo;
+   var idIn=registro1.IdInmueble;
    var precio=registro1.PrecioAlquiler;
    var titulo=registro1.Titulo;
    var direccion=registro1.Direccion;
    var tipo=registro1.EnVenta;
 var imagen=registro1.ImagenPrincipal;
- 	 var dormitorio=registro1.Dormitorios;
+   var dormitorio=registro1.Dormitorios;
    var descbanio=registro1.DescBanios;         
 
    precios.push(precio);
    direcciones.push(direccion);
    ids.push(id);
+   idV.push(idIn);
    tipos.push(tipo);
    imagenes.push(imagen);
     dormitorios.push(dormitorio);
    descbanios.push(descbanio);
-    	//$("#titulo1").text(titulo);
+      //$("#titulo1").text(titulo);
      
 ///////////////////////////////////////////////
       $("#precio1").text(precios[0]);
            $("#precio1footer").text(precios[0]);
           $("#direccion1").text(direcciones[0]);
            $("#direccion1footer").text(direcciones[0]);
-      $("#id1").text(ids[0]);
-          
-    
+      $("#id1").text(ids[0]+"#"+idV[0]);
+                    idInmueble1=idV[0];
+      $("#id1").attr("href", "./property-detail.html?idInmueble="+idInmueble1+"&codigo="+ids[0]);
+   // alert(imagenes[0]);
  $("#img1").attr("src",imagenes[0]);
 $("#imgfooter1").attr("src",imagenes[0]);
-      
+   
       
     if (tipos[0]) {
      $("#ventaoalquiler1").text("ALQUILER");
@@ -425,8 +467,9 @@ $("#dormitorio1").text(dormitorios[0]+ " Habitacion/es");
            $("#precio2footer").text(precios[1]);
         $("#direccion2").text(direcciones[1]);
             $("#direccion2footer").text(direcciones[1]);
-        $("#id2").text(ids[1]);
-           
+       $("#id2").text(ids[1]+"#"+idV[1]);
+                    idInmueble2=idV[1];
+      $("#id2").attr("href", "./property-detail.html?idInmueble="+idInmueble2+"&codigo="+ids[1]);
      
  $("#img2").attr("src",imagenes[1]);
 
@@ -445,9 +488,10 @@ $("#dormitorio2").text(dormitorios[1]+ " Habitacion/es");
    $("#precio3footer").text(precios[2]);
           $("#direccion3").text(direcciones[2]);
            $("#direccion3footer").text(direcciones[2]);
-      $("#id3").text(ids[2]);
-           
-     
+     $("#id3").text(ids[2]+"#"+idV[2]);
+                    idInmueble3=idV[2];
+      $("#id3").attr("href", "./property-detail.html?idInmueble="+idInmueble3+"&codigo="+ids[2]);
+      
  $("#img3").attr("src",imagenes[2]);
 $("#imgfooter3").attr("src",imagenes[2]);
    
@@ -461,7 +505,9 @@ $("#dormitorio3").text(dormitorios[2]+ " Habitacion/es");
 /////////////////////////////    
   $("#precio4").text(precios[3]);
           $("#direccion4").text(direcciones[3]);
-      $("#id4").text(ids[3]);
+      $("#id4").text(ids[3]+"#"+idV[3]);
+                    idInmueble4=idV[3];
+      $("#id4").attr("href", "./property-detail.html?idInmueble="+idInmueble4+"&codigo="+ids[3]);
            
     
  $("#img4").attr("src",imagenes[3]);
@@ -480,14 +526,8 @@ $("#dormitorio4").text(dormitorios[3]+ " Habitacion/es");
       });
        
       }); 
-     //$(".loader").fadeOut("slow");          
-    },
-    error: function(data) {
-     // alert(data);
-    }
-  });
-
-  } 
+            $(".loader").fadeOut("slow"); 
+ }
 
 
     </script>
@@ -665,9 +705,9 @@ $("#dormitorio4").text(dormitorios[3]+ " Habitacion/es");
 										<div class="widget widget-social">
 											<div class="social">
 												<div class="social-all">
-													<a href="https://es-la.facebook.com/aygsantafe/" target="_blank" class="facebook"><i class="fa fa-facebook"></i><span>Facebook</span></a>
+													<a href="https://es-la.facebook.com/aygsantafe/" target="_blank" class="facebook"><i class="fa fa-facebook"></i><span></span></a>
 													<!-- <a href="#" target="_blank" class="google"><i class="fa fa-google"></i></a> -->
-													<a href="https://www.instagram.com/ayginmobiliaria/" target="_blank" class="twitter"><i class="fa fa-instagram"></i><span>Instagram</span></a>
+													<a href="https://www.instagram.com/ayginmobiliaria/" target="_blank" class="twitter"><i class="fa fa-instagram"></i><span></span></a>
 												</div>
 											</div>
 										</div>
@@ -742,9 +782,9 @@ $("#dormitorio4").text(dormitorios[3]+ " Habitacion/es");
 											<i class="fa fa-angle-down"></i>
 										</li>
 										<li>
-											<a href="agent-list.html">Agentes</a>
+										<!-- 	<a href="agent-list.html">Agentes</a> -->
 											<ul class="sub-menu">
-												<!-- <li><a href="agent-list.html">Listado de Nuestros Agentes</a></li> -->
+												<li><a href="agent-list.html">Listado de Nuestros Agentes</a></li>
 												<!-- <li><a href="agent-detail.html">Agentes Detalles</a></li> -->
 											</ul>
 											<i class="fa fa-angle-down"></i>
@@ -774,16 +814,23 @@ $("#dormitorio4").text(dormitorios[3]+ " Habitacion/es");
 					</div>
 				</div>
 			</header>
-			<div class="loader"></div>
+	
+     
+
 			<div  id="main">
 				
    
 				<div class="section section-bg-1 pt-17 pb-17">
-					<div class="container">
-						<div class="row">
-							<div class="col-md-4">
-								<div class="property-box-meta">
-									<div class="property-box-meta-content">
+					
+          <div class="container">
+						
+            <div class="row">
+							
+              <div class="col-md-10">
+							
+                <div class="property-box-meta">
+								      <div class="loader"></div>
+                	<div class="property-box-meta-content">
 										<span id="ventaoalquilerD"class="property-status"></span><span>Propiedad Destacada</span>
 										<div class="item-head">
 											<h1 class="item-title">
@@ -809,7 +856,7 @@ $("#dormitorio4").text(dormitorios[3]+ " Habitacion/es");
 										</div>
 										<div class="price">
 											<span class="before-price">$</span> 
-											<span id="precioD" class="amount"></span>
+											<span id="precioD" style="font-size: 20px; opacity:0.5" class="amount"></span>
 										</div>
 									</div>
 								</div>
@@ -1906,7 +1953,7 @@ Nos gustaría agradecerle sinceramente a usted y al equipo de AyG inmobiliaria; 
 										<div class="recent-property-wrap">
 											<div class="recent-property-item">
 												<div class="thumbnail">
-													<a href="property-detail.html" title="Family House in Hudson">
+													<a href="property-detail.html" >
 														<img id="imgfooter1" />
 													</a>
 												</div>
@@ -1923,7 +1970,7 @@ Nos gustaría agradecerle sinceramente a usted y al equipo de AyG inmobiliaria; 
 											</div>
 											<div class="recent-property-item">
 												<div class="thumbnail">
-													<a href="property-detail.html" title="Loft Above The City">
+													<a href="property-detail.html" >
 														<img id="imgfooter2" />
 													</a>
 												</div>

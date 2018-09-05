@@ -3,15 +3,14 @@ include_once('WebService.php');
 
 
 
- $idInmueble = $_GET['idInmueble'];
+ $idInmueble = $_POST['idInmueble'];
     
         
-   //pasando los parámetros a un array
-    $param=array('idInmueble'=>$idInmueble);
+  
  
 $ws= new WebService('GetImagenesInmueble',array("parameters"=>array(
-	'idInmueble' =>"16107" )));
-$ws->wsEjecutar($ws);
-    
+	'idInmueble' =>$idInmueble )));
+$obj=$ws->wsEjecutar($ws);
+    echo $obj;
 
     ?>
